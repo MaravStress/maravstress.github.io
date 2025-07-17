@@ -57,6 +57,20 @@
         }
         animate();
 
+        let lastMouseX = null;
+        let lastMouseY = null;
+        let forseMouse = 0.02;
+        document.addEventListener('mousemove', (event) => { 
+            if (lastMouseX !== null && lastMouseY !== null) {
+            const deltaX = event.clientX - lastMouseX;
+            const deltaY = event.clientY - lastMouseY;
+            camera.position.x += deltaX * 0.1 * forseMouse;
+            camera.position.y -= deltaY * 0.1 *forseMouse;
+            camera.lookAt(scene.position);
+            }
+            lastMouseX = event.clientX;
+            lastMouseY = event.clientY;
+        });
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
             cube.rotation.x = scrollY * 0.01;
