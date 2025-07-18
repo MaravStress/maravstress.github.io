@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eliam Paredes</title>
     <link rel="stylesheet" href="Library/Bootstrap v5.3.7/bootstrap.min.css">
-    <!-- Agrega Three.js y GLTFLoader desde CDN -->
-    <script src="https://unpkg.com/three@0.178.0/build/three.min.js"></script>
-    <script src="https://unpkg.com/three@0.178.0/examples/js/loaders/GLTFLoader.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-light">
@@ -22,7 +19,9 @@
     <div id="three-container" style="width:100vw; height:100vh; position:fixed; top:0; left:0; z-index:-1;"></div>
     <div style="height:2000px"></div> <!-- Para permitir scroll -->
 
-    <script defer>
+    <script type="module">
+         import * as THREE from 'https://unpkg.com/three@0.178.0/build/three.module.js';
+    
         const scene = new THREE.Scene();
 
         // Cámara configurada normalmente
@@ -53,38 +52,22 @@
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
         scene.add(ambientLight);
 
-        // Animación
         function animate() {
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
         }
         animate();
 
-        // insertar modelo 3D
-        const loader = new THREE.GLTFLoader();
-        loader.load(
-            'resources/objs/test/obj.glb', // Cambia esto por el nombre de tu archivo
-            function (gltf) {
-                gltf.scene.position.set(2, 0, 0); // Opcional: mueve el modelo
-                scene.add(gltf.scene);
-            },
-            undefined,
-            function (error) {
-                console.error('Error al cargar el modelo:', error);
-            }
-        );
-
-        // controles
         let lastMouseX = null;
         let lastMouseY = null;
         let forseMouse = 0.02;
         document.addEventListener('mousemove', (event) => { 
             if (lastMouseX !== null && lastMouseY !== null) {
-                const deltaX = event.clientX - lastMouseX;
-                const deltaY = event.clientY - lastMouseY;
-                camera.position.x += deltaX * 0.1 * forseMouse;
-                camera.position.y -= deltaY * 0.1 * forseMouse;
-                camera.lookAt(scene.position);
+            const deltaX = event.clientX - lastMouseX;
+            const deltaY = event.clientY - lastMouseY;
+            camera.position.x += deltaX * 0.1 * forseMouse;
+            camera.position.y -= deltaY * 0.1 *forseMouse;
+            camera.lookAt(scene.position);
             }
             lastMouseX = event.clientX;
             lastMouseY = event.clientY;
