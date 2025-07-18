@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eliam Paredes</title>
     <link rel="stylesheet" href="Library/Bootstrap v5.3.7/bootstrap.min.css">
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>    
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid justify-content-end">
-            <div class="navbar-nav">
+            <div class="navbar-nav">    
                 <a class="nav-link" href="#">Me</a>
                 <a class="nav-link" href="#">Proyectos</a>
                 <a class="nav-link" href="#">Contacto</a>
             </div>
         </div>
     </nav>
-    <div id="three-container" style="width:100vw; height:100vh; position:fixed; top:0; left:0; z-index:-1;"></div>
-    <div style="height:100%"></div> <!-- Para permitir scroll -->
+    <div id="testArea"></div>
+    <div style="height:100%"></div>
 
-    <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script>
         // Get the container
-        const container = document.getElementById("three-container");
+        const container = document.getElementById("testArea");
         
         // Create a canvas element
         const canvas = document.createElement("canvas");
@@ -36,19 +36,60 @@
         const scene = new BABYLON.Scene(engine);
 
         // Camera
-        const camera = new BABYLON.ArcRotateCamera("camera", Math.PI / 4, Math.PI / 4, 6, BABYLON.Vector3.Zero(), scene);
-        camera.attachControl(canvas, true);
+        const camera = new BABYLON.ArcRotateCamera("camera", Math.PI / 5, Math.PI / 4, 6, BABYLON.Vector3.Zero(), scene);
+        //camera.setPosition(new BABYLON.Vector3(15, 0, 8));
+        camera.attachControls(canvas, true);
 
         // Light
         const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(1, 1, 0), scene);
 
-        // Cube
-        const box = BABYLON.MeshBuilder.CreateBox("box", { size: 2 }, scene);
-        box.position.y = 1;
+        // Try to load GLB model first, fallback to FBX, then fallback to cube
+        BABYLON.SceneLoader.ImportMesh("", "resources/objs/test/texture/", "obj.glb", scene, 
+            function (meshes) {
+                // GLB model loaded successfully
+                console.log("GLB model loaded successfully:", meshes);
+                if (meshes.length > 0) {
+                    meshes.forEach(function (mesh) {
+                        mesh.position = new BABYLON.Vector3(0, 0, 0);
+                        mesh.scaling = new BABYLON.Vector3(1, 1, 1);
+                    });
+                }
+            },
+            function (progress) {
+                // Loading progress
+                console.log("Loading progress:", (progress.loaded / progress.total * 100) + "%");
+            },
+            function (error) {
+                // GLB failed, try FBX
+                console.log("GLB failed, trying FBX:", error);
+                BABYLON.SceneLoader.ImportMesh("", "resources/objs/test/", "obj.fbx", scene,
+                    function (meshes) {
+                        // FBX model loaded successfully
+                        console.log("FBX model loaded successfully:", meshes);
+                        if (meshes.length > 0) {
+                            meshes.forEach(function (mesh) {
+                                mesh.position = new BABYLON.Vector3(0, 0, 0);
+                                mesh.scaling = new BABYLON.Vector3(1, 1, 1);
+                            });
+                        }
+                    },
+                    function (progress) {
+                        console.log("FBX Loading progress:", (progress.loaded / progress.total * 100) + "%");
+                    },
+                    function (error) {
+                        // Both failed, create fallback cube
+                        console.log("Both models failed, creating fallback cube:", error);
+                        const box = BABYLON.MeshBuilder.CreateBox("box", { size: 2 }, scene);
+                        box.position.y = 1;
+                    }
+                );
+            }
+        );
 
-        // Animation loop
+
+
+        // Animation loop (essential for rendering)
         engine.runRenderLoop(() => {
-            box.rotation.y += 0.01;
             scene.render();
         });
 
