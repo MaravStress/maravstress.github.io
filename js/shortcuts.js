@@ -98,7 +98,10 @@ function ImportModel(nameModel, position = { x: 0, y: 0, z: 0 }, rotation = { x:
     );
 }
 
-
+// funciones matematicas
+function interpolar(inicio, fin, porcentaje) {
+  return inicio + (fin - inicio) * porcentaje;
+}
 
 
 

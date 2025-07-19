@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eliam Paredes</title>
     <link rel="stylesheet" href="Library/Bootstrap v5.3.7/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <script src="js/shortcuts.js"></script>
     <script src="js/fundamental.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-light">
+    <nav class="navbar navbar-expand-lg bg-light bg-blur Absolute w-100">
         <div class="container-fluid justify-content-end">
             <div class="navbar-nav">
                 <a class="nav-link" href="#">Me</a>
@@ -20,10 +22,12 @@
             </div>
         </div>
     </nav>
-    <div id="threejs-container" style="width: 100%; height: 1000px;"></div>
-    
+
+    <!-- Contenedor de Three.js -->
+    <div id="threejs-container" style="width: 100%; height: 150vh;"></div>
     <script src="Modules/homeAndMe.js"></script>
 
+    <!-- Informacion normal -->
     <section class="container my-5">
         <h2 class="mb-4 text-center">Habilidades Técnicas</h2>
         <div class="row justify-content-center">

@@ -30,12 +30,12 @@
         let me = null;
 
         // Cargamos modelos
-        ImportModel('home', { x: 0, y: 7, z: 0 }, { x: 0, y: 0, z: 0 }, function(model) {
+        ImportModel('home', { x: 0, y: 5, z: 0 }, { x: 0, y: 0, z: 0 }, function(model) {
            home = model;
            console.log('cargamos home correctamente!!');
         });
 
-        ImportModel('me', { x: 0, y: -3.6, z: 17 }, { x: 0, y: 0, z: 0 }, function(model) {
+        ImportModel('me', { x: 0, y: -5, z: 0 }, { x: 0, y: 0, z: 0 }, function(model) {
            me = model;
            console.log('cargamos me correctamente!!');
         });
@@ -46,8 +46,8 @@
         let scrollTop = 0;
         let maxScroll = 0;
         let scrollPercent = 0;
-
-        let speedCamera = 20;
+        let speedDownCamera = 20;
+        let CameraObjetivePosition = { x: 0, y: 0, z: 0 };
 
 
         function onMouseMove(e) {
@@ -61,7 +61,7 @@
             lastMouse.x = e.clientX;
             lastMouse.y = e.clientY;
             let fuerzaMouse = 0.1;
-            camera.position.x +=  mouseDelta.x * 0.01 * fuerzaMouse;
+            CameraObjetivePosition.x +=  mouseDelta.x * 0.01 * fuerzaMouse;
         }
 
         function onScroll(e){
@@ -70,8 +70,7 @@
             scrollPercent = scrollTop / maxScroll;
 
             // desplazamiento de la camara
-            camera.position.y = - (scrollPercent * speedCamera);
-
+            
             console.log('scrollTop:', scrollTop, 'maxScroll:', maxScroll, 'scrollPercent:', scrollPercent);
         }
                
@@ -80,20 +79,26 @@
             // regresamos a la posición original de la cámara
             let rango =  0.02;
             let velocidad = 0.06;
-            if(camera.position.x > rango || camera.position.x < -rango){
-                camera.position.x -= camera.position.x * velocidad; 
+            if(CameraObjetivePosition.x > rango || CameraObjetivePosition.x < -rango){
+                CameraObjetivePosition.x -= CameraObjetivePosition.x * velocidad; 
             }
             
-            // anclar me
-            if(scrollTop > 300 && 700 > scrollTop){
-                //me.position.y = meOrigen_Y ;//- (scrollPercent * 9);
-                let porcentaje = (scrollTop - 300) / (maxScroll - 300);
-                me.position.y = meOrigen_Y - (porcentaje * speedCamera);
-            }else if(scrollTop < 300 && meOrigen_Y == 0){
-                meOrigen_Y  = me.position.y;
+            const valor_Corte = 300;
+            if(scrollTop < valor_Corte){
 
+                CameraObjetivePosition.y = - (scrollPercent * speedDownCamera);
+                CameraObjetivePosition.z = interpolar(20, 2, scrollTop / valor_Corte);
+            }
+
+            // mov camera smoothly
+            const cameraSpeed = 0.1;
+            const rangoSmooth = 0.01;
+            if(Math.abs(CameraObjetivePosition.x - camera.position.x) > rangoSmooth || Math.abs(CameraObjetivePosition.y - camera.position.y) > rangoSmooth || Math.abs(CameraObjetivePosition.z - camera.position.z) > rangoSmooth){
+                camera.position.x += (CameraObjetivePosition.x - camera.position.x) * cameraSpeed;
+                camera.position.y += (CameraObjetivePosition.y - camera.position.y) * cameraSpeed;
+                camera.position.z += (CameraObjetivePosition.z - camera.position.z) * cameraSpeed;
+            }
         }
-    }
 
         //   ================================================================== Inputs
         container.addEventListener('mousemove', onMouseMove); 

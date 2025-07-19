@@ -1,0 +1,40 @@
+/* Absolutes */
+.Absolute {
+    position: absolute;
+}
+.AbsoluteCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.AbsoluteTop {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.AbsoluteBottom {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.AbsoluteLeft {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+.AbsoluteRight {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+/* FX */
+.bg-blur{
+    --bs-bg-opacity: 0.5 !important;
+    backdrop-filter: blur(5px);
+}
