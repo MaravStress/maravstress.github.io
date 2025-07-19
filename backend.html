@@ -1,0 +1,73 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend</title>
+    <link rel="stylesheet" href="Library/Bootstrap v5.3.7/bootstrap.min.css">
+</head>
+<body>
+    <div class="container my-5">
+        <h2 class="mb-4">Panel de Grupos de Habilidades</h2>
+        <div id="groups-list"></div>
+        <button class="btn btn-primary mt-3" id="add-group-btn">Agregar Grupo de Habilidades</button>
+        <button class="btn btn-success mt-3" id="load-group-btn" onclick="loadFromHere()">Cargar</button>
+        <button class="btn btn-success mt-3" id="save-group-btn" onclick="saveHabilidades()">Guardar</button>
+    </div>
+
+    <!-- Modal Grupo -->
+    <div class="modal fade" id="groupModal" tabindex="-1" aria-labelledby="groupModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <form class="modal-content" id="group-form">
+          <div class="modal-header">
+            <h5 class="modal-title" id="groupModalLabel">Grupo de Habilidades</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="group-index">
+            <div class="mb-3">
+              <label for="group-name" class="form-label">Nombre del Grupo</label>
+              <input type="text" class="form-control" id="group-name" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal Habilidad -->
+    <div class="modal fade" id="skillModal" tabindex="-1" aria-labelledby="skillModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <form class="modal-content" id="skill-form">
+          <div class="modal-header">
+            <h5 class="modal-title" id="skillModalLabel">Habilidad</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="skill-group-index">
+            <input type="hidden" id="skill-index">
+            <div class="mb-3">
+              <label for="skill-name" class="form-label">Nombre de la Habilidad</label>
+              <input type="text" class="form-control" id="skill-name" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div>
+        <p id="bd_habilidades">[]</p>
+    </div>
+    
+    <script src="js/backend_saveFromFile.js"></script>
+    <script src="js/backend_funciones_generales.js"></script>
+    <script src="Library/Bootstrap v5.3.7/bootstrap.min.js"></script>
+    <script src="Library/Bootstrap v5.3.7/bootstrap.bundle.min.js"></script>
+</body>
+</html>
