@@ -1,5 +1,6 @@
 function Animate() {
     requestAnimationFrame(Animate);
+    _update();
     renderer.render(scene, camera);
 }
 
@@ -23,14 +24,24 @@ function Resize(){
 
 // Render 
 function RendererSettings(renderer, container){
-
         const containerWidth = container.clientWidth;
         const containerHeight = container.clientHeight;
-
+        
         renderer.setSize(containerWidth, containerHeight);
         renderer.setClearColor(0xf0f0f0, 1);
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.shadowMap.autoUpdate = true;
         renderer.physicallyCorrectLights = true;
+        
+        // Configuraciones adicionales para mejor calidad
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.0;
+        renderer.antialias = true;
+        
+        // Configuraciones para evitar fragmentación visual
+        renderer.sortObjects = true;
+        renderer.preserveDrawingBuffer = false;
+        renderer.powerPreference = "high-performance";
 } 

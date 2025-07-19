@@ -1,4 +1,4 @@
-function ImportModel(nameModel, callback){
+function ImportModel(nameModel, position = { x: 0, y: 0, z: 0 }, rotation = { x: 0, y: 0, z: 0 }, callback) {
     const loader = new THREE.GLTFLoader();
     // Ubicacion de los modelos, 
     // IMPORTANTE todos se llaman obj, el nombre esta en la carpeta
@@ -7,42 +7,68 @@ function ImportModel(nameModel, callback){
             // Success callback
             const loadedModel = gltf.scene;
             
-            // Asegurar que todos los materiales respondan a la luz
+            // Asegurar que todos los materiales respondan a la luz y se rendericen correctamente
             loadedModel.traverse(function (child) {
                 if (child.isMesh) {
-                    // Si el material es BasicMaterial, convertirlo a StandardMaterial
-                    if (child.material.isMeshBasicMaterial) {
-                        child.material = new THREE.MeshStandardMaterial({
-                            color: child.material.color,
-                            map: child.material.map,
-                            transparent: child.material.transparent,
-                            opacity: child.material.opacity
-                        });
+                    // Configurar el material correctamente
+                    if (child.material) {
+                        // Si es un array de materiales
+                        if (Array.isArray(child.material)) {
+                            child.material.forEach(material => {
+                                configureMaterial(material);
+                            });
+                        } else {
+                            configureMaterial(child.material);
+                        }
                     }
-                    // Habilitar sombras si es necesario
+                    
+                    // Configurar geometría
+                    if (child.geometry) {
+                        child.geometry.computeVertexNormals();
+                        child.geometry.computeBoundingBox();
+                    }
+                    
+                    // Habilitar sombras
                     child.castShadow = true;
                     child.receiveShadow = true;
+                    
+                    // Asegurar que se renderice correctamente
+                    child.frustumCulled = false;
                 }
             });
             
+            // Función auxiliar para configurar materiales
+            function configureMaterial(material) {
+                // Forzar actualización del material
+                material.needsUpdate = true;
+                
+                // Si es BasicMaterial, convertir a StandardMaterial
+                if (material.isMeshBasicMaterial) {
+                    const newMaterial = new THREE.MeshStandardMaterial({
+                        color: material.color,
+                        map: material.map,
+                        transparent: material.transparent,
+                        opacity: material.opacity,
+                        alphaTest: 0.01
+                    });
+                    return newMaterial;
+                } else if (material.isMeshStandardMaterial || material.isMeshPhongMaterial) {
+                    // Configurar propiedades para mejor renderizado
+                    material.flatShading = false;
+                    material.side = THREE.FrontSide;
+                    material.alphaTest = 0.01;
+                }
+                
+                return material;
+            }
+            
             scene.add(loadedModel);
             
-            // Calcular el bounding box del modelo para escalarlo apropiadamente
-            const box = new THREE.Box3().setFromObject(loadedModel);
-            const center = box.getCenter(new THREE.Vector3());
-            const size = box.getSize(new THREE.Vector3());
-            
-            // Normalizar el tamaño del modelo para que sea consistente
-            const maxDimension = Math.max(size.x, size.y, size.z);
-            const desiredSize = 5; // Tamaño deseado para el modelo
-            const scale = desiredSize / maxDimension;
-            
-            // Aplicar escala
-            loadedModel.scale.setScalar(scale);
-            
-            // Centrar el modelo
-            loadedModel.position.copy(center).multiplyScalar(-scale);
-            
+            // Configurar escala, posición y rotación por defecto
+            loadedModel.scale.set(1, 1, 1);
+            loadedModel.position.set(position.x, position.y, position.z);
+            loadedModel.rotation.set(rotation.x, rotation.y, rotation.z);
+
             console.log('Model loaded successfully!');
             
             // Call the callback with the loaded model
