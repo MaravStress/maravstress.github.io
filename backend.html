@@ -10,7 +10,6 @@
         <h2 class="mb-4">Panel de Grupos de Habilidades</h2>
         <div id="groups-list"></div>
         <button class="btn btn-primary mt-3" id="add-group-btn">Agregar Grupo de Habilidades</button>
-        <button class="btn btn-success mt-3" id="load-group-btn" onclick="loadFromHere()">Cargar</button>
         <button class="btn btn-success mt-3" id="save-group-btn" onclick="saveHabilidades()">Guardar</button>
     </div>
 
@@ -63,6 +62,52 @@
 
     <div>
         <p id="bd_habilidades">[]</p>
+    </div>
+
+    <!-- Proyectos -->
+    <div class="container my-5">
+        <h2 class="mb-4">Panel de Proyectos</h2>
+        <div id="projects-list"></div>
+        <button class="btn btn-primary mt-3" id="add-project-btn " onclick="AddProjects()">Agregar Proyecto</button>
+        <button class="btn btn-success mt-3" id="save-project-btn" onclick="save_Proyectos()">Guardar Proyectos</button>
+    </div>
+    <!-- Modal Proyecto -->
+    <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <form class="modal-content" id="project-form">
+          <div class="modal-header">
+            <h5 class="modal-title" id="projectModalLabel">Proyecto</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="project-index">
+            <div class="mb-3">
+              <label for="project-id" class="form-label">ID</label>
+              <input type="text" class="form-control" id="project-id" required>
+            </div>
+            <div class="mb-3">
+              <label for="project-title" class="form-label">Título</label>
+              <input type="text" class="form-control" id="project-title" required>
+            </div>
+            <div class="mb-3">
+              <label for="project-short-description" class="form-label">Descripción Corta</label>
+              <input type="text" class="form-control" id="project-short-description" required>
+            </div>
+            <div class="mb-3">
+              <label for="project-long-description" class="form-label">Descripción Larga</label>
+              <textarea class="form-control" id="project-long-description" rows="4" required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <div>
+        <p id="bd_proyectos">[]</p>
     </div>
     
     <script src="js/backend_saveFromFile.js"></script>
