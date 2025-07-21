@@ -38,37 +38,8 @@
 
     <section class="container-fluid my-5 px-5">
         <h2 class="mb-4 text-center">Proyectos</h2>
-        <div class="row px-5">
-            <div class="col-12 mb-4">
-                <div class="card shadow h-100 w-100">
-                    <div class="card-header text-center bg-white border-bottom-0">
-                        <strong class="fs-4">Proyecto 1</strong>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, urna eu tincidunt consectetur, nisi nisl aliquam nunc.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 mb-4">
-                <div class="card shadow h-100 w-100">
-                    <div class="card-header text-center bg-white border-bottom-0">
-                        <strong class="fs-4">Proyecto 2</strong>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, urna eu tincidunt consectetur, nisi nisl aliquam nunc.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 mb-4">
-                <div class="card shadow h-100 w-100">
-                    <div class="card-header text-center bg-white border-bottom-0">
-                        <strong class="fs-4">Proyecto 3</strong>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, urna eu tincidunt consectetur, nisi nisl aliquam nunc.</p>
-                    </div>
-                </div>
-            </div>
+        <div id="proyectos-container" class="row justify-content-center">
+            <!-- Los proyectos se cargarán dinámicamente aquí -->
         </div>
     </section>
 
@@ -93,6 +64,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', loadHabilidades);
+        document.addEventListener('DOMContentLoaded', loadProyectos);
     </script>
 
        <script src="Library/Bootstrap v5.3.7/bootstrap.bundle.min.js"></script>

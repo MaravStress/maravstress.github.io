@@ -51,3 +51,53 @@ async function loadHabilidades() {
         //  container.innerHTML = '<div class="col-12 text-center"><p class="text-muted">Error al cargar las habilidades</p></div>';
     }
 }
+
+async function loadProyectos() {
+    try {
+        const contenido = await Load('bd/bd_proyectos.json');
+        if (contenido) {
+            const proyectos = JSON.parse(contenido);
+            const container = document.getElementById('proyectos-container');
+            
+            // Limpiar contenedor
+            container.innerHTML = '';
+            
+            // Renderizar cada proyecto
+            proyectos.forEach(proyecto => {
+                const col = document.createElement('div');
+                col.className = 'col-md-4 mb-4';
+                
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'card h-100 shadow-sm';
+                
+                const cardBody = document.createElement('div');
+                cardBody.className = 'card-body';
+                
+                const cardTitle = document.createElement('h5');
+                cardTitle.className = 'card-title';
+                cardTitle.textContent = proyecto.title;
+                
+                const cardText = document.createElement('p');
+                cardText.className = 'card-text';
+                cardText.textContent = proyecto.shortDescription;
+                
+                cardBody.appendChild(cardTitle);
+                cardBody.appendChild(cardText);
+                cardDiv.appendChild(cardBody);
+                col.appendChild(cardDiv);
+                container.appendChild(col);
+            });
+            
+            console.log('Proyectos cargados correctamente');
+        } else {
+            console.error('No se pudo cargar el archivo de proyectos');
+            // Mostrar mensaje de error en el contenedor
+            const container = document.getElementById('proyectos-container');
+            container.innerHTML = '<div class="col-12 text-center"><p class="text-muted">No se pudieron cargar los proyectos</p></div>';
+        }
+    } catch (error) {
+        console.error('Error al cargar proyectos:', error);
+        const container = document.getElementById('proyectos-container');
+        container.innerHTML = '<div class="col-12 text-center"><p class="text-muted">Error al cargar los proyectos</p></div>';
+    }
+}
