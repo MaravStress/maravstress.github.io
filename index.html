@@ -59,6 +59,27 @@
         </div>
     </footer>
 
+    <!-- Modal para mostrar detalles del proyecto -->
+    <div class="modal fade" id="proyectoModal" tabindex="-1" aria-labelledby="proyectoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="proyectoModalLabel">Título del Proyecto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="mb-3">Descripción Corta:</h6>
+                    <p id="modal-descripcion-corta" class="mb-4"></p>
+                    <h6 class="mb-3">Descripción Completa:</h6>
+                    <p id="modal-descripcion-larga"></p>
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/index_cargar_info.js"></script>
 
 
