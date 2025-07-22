@@ -1,0 +1,30 @@
+# Carpetas de diseño
+UIUX_design/
+
+# Archivos temporales
+*.tmp
+*.temp
+~*
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de editor
+.vscode/
+*.swp
+*.swo
+
+# Dependencias (si usas npm)
+node_modules/
+
+# Archivos de log
+*.log
+
+# Archivos de respaldo
+*.bak
+*.backup
+
+# Archivos sensibles (si los tienes)
+.env
+config.json
