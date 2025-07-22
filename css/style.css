@@ -35,13 +35,29 @@
 
 /* FX */
 .bg-blur{
+    background-color: rgba(255, 255, 255, 0.5) !important;
     --bs-bg-opacity: 0.5 !important;
     backdrop-filter: blur(15px) !important;
     --bs-card-bg: rgba(255, 255, 255, 0.5) !important;
 }
+.bg-blur-6{
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    --bs-bg-opacity: 0.6 !important;
+    backdrop-filter: blur(15px) !important;
+    --bs-card-bg: rgba(255, 255, 255, 0.6) !important;
+}
 
-.parallax-bg {
+.hover-zoom {
+    transform: scale(1);
+    transition: 0.3s ease;
+}
+.hover-zoom:hover {
+    transform: scale(1.05);
+}
+
+.parallax-bg-1, .parallax-bg-2, .parallax-bg-3, .bg-banner {
+    background-attachment:initial;
     background-size: cover; 
-    background-position: top; 
+    background-position: center; 
     position: relative;
 }

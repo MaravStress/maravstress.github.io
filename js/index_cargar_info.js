@@ -64,34 +64,19 @@ async function loadProyectos() {
             
             // Renderizar cada proyecto
             proyectos.forEach(proyecto => {
-                const col = document.createElement('div');
-                col.className = 'col-md-6 mb-4';
-                
-                const cardDiv = document.createElement('div');
-                cardDiv.className = 'card h-100 shadow-sm';
-                cardDiv.style.cursor = 'pointer';
-                
-                const cardBody = document.createElement('div');
-                cardBody.className = 'card-body';
-                
-                const cardTitle = document.createElement('h5');
-                cardTitle.className = 'card-title';
-                cardTitle.textContent = proyecto.title;
-                
-                const cardText = document.createElement('p');
-                cardText.className = 'card-text';
-                cardText.textContent = proyecto.shortDescription;
-                
-                // Agregar evento click para mostrar modal
-                cardDiv.addEventListener('click', () => {
-                    mostrarModalProyecto(proyecto);
-                });
-                
-                cardBody.appendChild(cardTitle);
-                cardBody.appendChild(cardText);
-                cardDiv.appendChild(cardBody);
-                col.appendChild(cardDiv);
-                container.appendChild(col);
+                container.innerHTML += `
+                    <div class="col-md-6 mb-4 hover-zoom">
+                        <div class="card h-100 shadow rounded-4 parallax-bg-1" 
+                             style="cursor: pointer; background-image: url(bd/img/${proyecto.id}/banner.png);"
+                             onclick="mostrarModalProyecto(${JSON.stringify(proyecto).replace(/"/g, '&quot;')})">
+                            <div class="my-5"></div>
+                            <div class="card-body bg-blur-6 rounded-bottom-4">
+                                <h5 class="card-title">${proyecto.title}</h5>
+                                <p class="card-text">${proyecto.shortDescription}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
             });
             
             console.log('Proyectos cargados correctamente');
@@ -108,12 +93,21 @@ async function loadProyectos() {
     }
 }
 
-function mostrarModalProyecto(proyecto) {
-    // Actualizar el contenido del modal
+function mostrarModalProyecto(proyecto) { // Actualizar el contenido del modal
+    // Texto
     document.getElementById('proyectoModalLabel').textContent = proyecto.title;
     document.getElementById('modal-descripcion-corta').textContent = proyecto.shortDescription;
     document.getElementById('modal-descripcion-larga').textContent = proyecto.longDescription;
-    
+    // imagenes:
+    const modalbanner = document.getElementById('modal-banner');
+    const modalImagenes1 = document.getElementById('modal-imagenes-1');
+    const modalImagenes2 = document.getElementById('modal-imagenes-2');
+    const modalImagenes3 = document.getElementById('modal-imagenes-3');
+
+    modalbanner.style.backgroundImage = `url(bd/img/${proyecto.id}/banner.png)`;
+    modalImagenes1.src = `bd/img/${proyecto.id}/img-1.png`;
+    modalImagenes2.src = `bd/img/${proyecto.id}/img-2.png`;
+    modalImagenes3.src = `bd/img/${proyecto.id}/img-3.png`;
     // Mostrar el modal usando Bootstrap
     const modal = new bootstrap.Modal(document.getElementById('proyectoModal'));
     modal.show();
