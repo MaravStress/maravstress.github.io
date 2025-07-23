@@ -34,16 +34,21 @@
 }
 
 /* FX */
-.bg-blur{
-    background-color: rgba(255, 255, 255, 0.5) !important;
-    --bs-bg-opacity: 0.5 !important;
-    backdrop-filter: blur(15px) !important;
-    --bs-card-bg: rgba(255, 255, 255, 0.5) !important;
+.bg-blur {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    --bs-bg-opacity: 0.3 !important;
+    backdrop-filter: blur(10px) saturate(150%) url(#glass-distortion) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
+    --bs-card-bg: rgba(255, 255, 255, 0.3) !important;
+  
+   
 }
-.bg-blur-6{
+.bg-blur-8{
+
     background-color: rgba(255, 255, 255, 0.6) !important;
     --bs-bg-opacity: 0.6 !important;
-    backdrop-filter: blur(15px) !important;
+    backdrop-filter: blur(10px) saturate(150%) brightness(2) url(#glass-distortion) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
     --bs-card-bg: rgba(255, 255, 255, 0.6) !important;
 }
 

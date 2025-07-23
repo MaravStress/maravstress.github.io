@@ -66,14 +66,13 @@ async function loadProyectos() {
             proyectos.forEach(proyecto => {
                 container.innerHTML += `
                     <div class="col-md-6 mb-4 hover-zoom">
-                        <div class="card h-100 shadow rounded-4 parallax-bg-1" 
-                             style="cursor: pointer; background-image: url(bd/img/${proyecto.id}/banner.png);"
-                             onclick="mostrarModalProyecto(${JSON.stringify(proyecto).replace(/"/g, '&quot;')})">
-                            <div class="my-5"></div>
-                            <div class="card-body bg-blur-6 rounded-bottom-4">
+                        <div class="card h-100 shadow rounded-4 bg-blur " style="cursor: pointer;" onclick="mostrarModalProyecto(${JSON.stringify(proyecto).replace(/"/g, '&quot;')})">
+                            <div class="card-body">
                                 <h5 class="card-title">${proyecto.title}</h5>
                                 <p class="card-text">${proyecto.shortDescription}</p>
                             </div>
+                            <div class="m-2 rounded-3 parallax-bg-1" style="width: auto; aspect-ratio: 4 / 1;  background-image: url(bd/img/${proyecto.id}/banner.png);"></div>
+
                         </div>
                     </div>
                 `;
