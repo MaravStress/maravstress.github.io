@@ -246,7 +246,6 @@ function createSpotLight( color = 0xffffff, intensity = 1, distance = 0,
         light.shadow.radius = 10;
         light.shadow.blurSamples = 25;
     }
-    
     return light;
 }
 
