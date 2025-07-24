@@ -33,9 +33,7 @@ function RendererSettings(renderer, container){
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.shadowMap.autoUpdate = true;
         renderer.physicallyCorrectLights = true;
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.outputEncoding = THREE.sRGBEncoding;
-
+        
         // Configuraciones adicionales para mejor calidad
         renderer.outputEncoding = THREE.sRGBEncoding;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -46,6 +44,4 @@ function RendererSettings(renderer, container){
         renderer.sortObjects = true;
         renderer.preserveDrawingBuffer = false;
         renderer.powerPreference = "high-performance";
-
-        
 } 

@@ -1,10 +1,13 @@
+<<<<<<< HEAD
 import * as THREE from 'https://unpkg.com/three@0.160.1/build/three.module.js';
 import { GLTFLoader } from 'https://unpkg.com/three@0.160.1/examples/jsm/loaders/GLTFLoader.js';
 
 
 //   ================================================================== Configuramos todo lo esencial
+=======
+ //   ================================================================== Configuramos todo lo esencial
+>>>>>>> parent of ec01fc2 (Ahora tenemos materiales de calidad)
         const scene = new THREE.Scene();
-        const clock = new THREE.Clock();
         const container = document.getElementById('threejs-container');
         const camera = new THREE.PerspectiveCamera(70, container.clientWidth / container.clientHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -13,18 +16,8 @@ import { GLTFLoader } from 'https://unpkg.com/three@0.160.1/examples/jsm/loaders
         // Position the camera
         camera.position.z = 20;
         camera.position.y = 0;
+        
 
-        // los reflejos y el background 
-    //     const pmremGenerator = new THREE.PMREMGenerator(renderer);
-    //     pmremGenerator.compileCubemapShader();
-
-    //     const envRT = pmremGenerator.fromScene(roomScene);
-    //     const envMap = envRT.texture;
-    //    scene.environment = envMap;
-    //    scene.background = envMap;
-
-       // fx
-        scene.fog = new THREE.FogExp2(0xb4b4b4ff, 0.02);
         //   ==================================================================  Luces
         const ambientLight = createAmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
@@ -64,6 +57,7 @@ import { GLTFLoader } from 'https://unpkg.com/three@0.160.1/examples/jsm/loaders
         let speedDownCamera = 20;
         let CameraObjetivePosition = { x: 0, y: 0, z: 0 };
 
+
         function onMouseMove(e) {
             if (lastMouse.x === 0 && lastMouse.y === 0) {
                 lastMouse.x = e.clientX;
@@ -85,7 +79,7 @@ import { GLTFLoader } from 'https://unpkg.com/three@0.160.1/examples/jsm/loaders
 
             // desplazamiento de la camara
             
-            //console.log('scrollTop:', scrollTop, 'maxScroll:', maxScroll, 'scrollPercent:', scrollPercent);
+            console.log('scrollTop:', scrollTop, 'maxScroll:', maxScroll, 'scrollPercent:', scrollPercent);
         }
                
         let meOrigen_Y = 0;
@@ -111,17 +105,6 @@ import { GLTFLoader } from 'https://unpkg.com/three@0.160.1/examples/jsm/loaders
                 camera.position.x += (CameraObjetivePosition.x - camera.position.x) * cameraSpeed;
                 camera.position.y += (CameraObjetivePosition.y - camera.position.y) * cameraSpeed;
                 camera.position.z += (CameraObjetivePosition.z - camera.position.z) * cameraSpeed;
-            }
-            
-            // ✅ ACTUALIZAR ANIMACIONES
-            const delta = clock.getDelta(); // Necesitas agregar clock
-            
-            if (home && home.mixer) {
-                home.mixer.update(delta);
-            }
-            
-            if (me && me.mixer) {
-                me.mixer.update(delta);
             }
         }
 
