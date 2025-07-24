@@ -82,7 +82,7 @@
 
             // desplazamiento de la camara
             
-            console.log('scrollTop:', scrollTop, 'maxScroll:', maxScroll, 'scrollPercent:', scrollPercent);
+            //console.log('scrollTop:', scrollTop, 'maxScroll:', maxScroll, 'scrollPercent:', scrollPercent);
         }
                
         let meOrigen_Y = 0;

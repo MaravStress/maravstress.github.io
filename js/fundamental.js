@@ -32,12 +32,12 @@ function RendererSettings(renderer, container){
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.shadowMap.autoUpdate = true;
-        renderer.physicallyCorrectLights = true;
+        renderer.useLegacyLights = false; 
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.outputEncoding = THREE.sRGBEncoding;
+        renderer.outputColorSpace = THREE.SRGBColorSpace; 
 
         // Configuraciones adicionales para mejor calidad
-        renderer.outputEncoding = THREE.sRGBEncoding;
+        renderer.outputColorSpace = THREE.SRGBColorSpace; 
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 1.0;
         renderer.antialias = true;
@@ -48,4 +48,4 @@ function RendererSettings(renderer, container){
         renderer.powerPreference = "high-performance";
 
         
-} 
+}
