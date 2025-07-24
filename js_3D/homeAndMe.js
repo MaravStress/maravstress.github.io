@@ -47,7 +47,7 @@
            console.log('cargamos home correctamente!!');
         });
 
-        ImportModel('me', { x: 0, y: -5, z: 0 }, { x: 0, y: 0, z: 0 }, function(model) {
+        ImportModel('me', { x: 0, y: -4.5, z: 0 }, { x: 0, y: 0, z: 0 }, function(model) {
            me = model;
            console.log('cargamos me correctamente!!');
         });
@@ -82,7 +82,7 @@
 
             // desplazamiento de la camara
             
-            //console.log('scrollTop:', scrollTop, 'maxScroll:', maxScroll, 'scrollPercent:', scrollPercent);
+            console.log('scrollTop:', scrollTop, 'maxScroll:', maxScroll, 'scrollPercent:', scrollPercent);
         }
                
         let meOrigen_Y = 0;
@@ -95,10 +95,14 @@
             }
             
             const valor_Corte = 300;
+            //console.log('scrollTop:', camera.position.y, 'valor_Corte:', valor_Corte, 'scrollPercent:', scrollPercent);
             if(scrollTop < valor_Corte){
 
-                CameraObjetivePosition.y = - (scrollPercent * speedDownCamera);
+                CameraObjetivePosition.y =  - (scrollPercent * speedDownCamera);
                 CameraObjetivePosition.z = interpolar(20, 2, scrollTop / valor_Corte);
+            }else{
+                CameraObjetivePosition.y =  interpolar(-3, -3.5, scrollPercent);
+                CameraObjetivePosition.z = 2;
             }
 
             // mov camera smoothly

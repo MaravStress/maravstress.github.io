@@ -34,7 +34,7 @@ function ImportModel(nameModel, position = { x: 0, y: 0, z: 0 }, rotation = { x:
                         } else {
                             child.material = configureMaterial(child.material);
                         }
-                        console.log(`Material configurado para ${nameModel}:`, child.material);
+                        //console.log(`Material configurado para ${nameModel}:`, child.material);
                     }
                     
                     // Configurar geometría
@@ -131,7 +131,7 @@ function ImportModel(nameModel, position = { x: 0, y: 0, z: 0 }, rotation = { x:
         },
         function (progress) {
             // Progress callback
-            console.log('Loading progress: ', (progress.loaded / progress.total * 100) + '%');
+            //console.log('Loading progress: ', (progress.loaded / progress.total * 100) + '%');
         },
         function (error) {
             // Error callback
