@@ -1,3 +1,6 @@
+import * as THREE from 'https://unpkg.com/three@0.160.1/build/three.module.js';
+import { GLTFLoader } from 'https://unpkg.com/three@0.160.1/examples/jsm/loaders/GLTFLoader.js';
+
 
 //   ================================================================== Configuramos todo lo esencial
         const scene = new THREE.Scene();
