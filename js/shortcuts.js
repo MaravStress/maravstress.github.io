@@ -1,6 +1,4 @@
 function ImportModel(nameModel, position = { x: 0, y: 0, z: 0 }, rotation = { x: 0, y: 0, z: 0 }, callback) {
-    
-
     const loader = new THREE.GLTFLoader();
     // Ubicacion de los modelos, 
     // IMPORTANTE todos se llaman obj, el nombre esta en la carpeta
@@ -9,32 +7,19 @@ function ImportModel(nameModel, position = { x: 0, y: 0, z: 0 }, rotation = { x:
             // Success callback
             const loadedModel = gltf.scene;
             
-            // AGREGAR MANEJO DE ANIMACIONES
-            let mixer = null;
-            if (gltf.animations && gltf.animations.length > 0) {
-                mixer = new THREE.AnimationMixer(loadedModel);
-                
-                // Reproducir todas las animaciones
-                gltf.animations.forEach(clip => {
-                    const action = mixer.clipAction(clip);
-                    action.play();
-                });
-                
-               // console.log(`Animaciones encontradas para ${nameModel}:`, gltf.animations.length);
-            }
-            
-            // Configurar el modelo (mantener código existente)
+            // Asegurar que todos los materiales respondan a la luz y se rendericen correctamente
             loadedModel.traverse(function (child) {
                 if (child.isMesh) {
                     // Configurar el material correctamente
                     if (child.material) {
                         // Si es un array de materiales
                         if (Array.isArray(child.material)) {
-                            child.material = child.material.map(material => configureMaterial(material));
+                            child.material.forEach(material => {
+                                configureMaterial(material);
+                            });
                         } else {
-                            child.material = configureMaterial(child.material);
+                            configureMaterial(child.material);
                         }
-                        console.log(`Material configurado para ${nameModel}:`, child.material);
                     }
                     
                     // Configurar geometría
@@ -57,61 +42,24 @@ function ImportModel(nameModel, position = { x: 0, y: 0, z: 0 }, rotation = { x:
                 // Forzar actualización del material
                 material.needsUpdate = true;
                 
-                // Si ya es PhysicalMaterial, solo configurar propiedades básicas
-                if (material.isMeshPhysicalMaterial) {
+                // Si es BasicMaterial, convertir a StandardMaterial
+                if (material.isMeshBasicMaterial) {
+                    const newMaterial = new THREE.MeshStandardMaterial({
+                        color: material.color,
+                        map: material.map,
+                        transparent: material.transparent,
+                        opacity: material.opacity,
+                        alphaTest: 0.01
+                    });
+                    return newMaterial;
+                } else if (material.isMeshStandardMaterial || material.isMeshPhongMaterial) {
+                    // Configurar propiedades para mejor renderizado
                     material.flatShading = false;
                     material.side = THREE.FrontSide;
-                    material.alphaTest = material.alphaTest || 0.01;
-                    material.skinning = true;
-                    material.transparent = true;
-                    material.needsUpdate = true;
-                    // material.envMap = envMap;
-                    material.envMapIntensity = 1;
-                    material.depthWrite = false;
-                    return material;
+                    material.alphaTest = 0.01;
                 }
                 
-                // Para cualquier otro tipo de material, convertir a PhysicalMaterial
-                const newMaterial = new THREE.MeshPhysicalMaterial({
-                    // Propiedades básicas (disponibles en todos los materiales)
-                    color: material.color || new THREE.Color(0xffffff),
-                    map: material.map,
-                    transparent: material.transparent,
-                    opacity: material.opacity !== undefined ? material.opacity : 1.0,
-                    alphaTest: material.alphaTest || 0.01,
-                    
-                    // Propiedades avanzadas (si están disponibles)
-                    normalMap: material.normalMap || null,
-                    roughnessMap: material.roughnessMap || null,
-                    metalnessMap: material.metalnessMap || null,
-                    aoMap: material.aoMap || null,
-                    emissive: material.emissive || new THREE.Color(0x000000),
-                    emissiveMap: material.emissiveMap || null,
-                    
-                    // Valores específicos según el tipo original
-                    metalness: material.metalness || 0.0,
-                    roughness: material.roughness || (material.isMeshPhongMaterial ? 0.7 : 0.5),
-                    
-                    // Propiedades específicas de PhysicalMaterial
-                    clearcoat: material.clearcoat || 0.0,
-                    clearcoatRoughness: material.clearcoatRoughness || 0.0,
-                    reflectivity: material.reflectivity || 0.5,
-                    ior: material.ior || 1.5,
-                    transmission: material.transmission || 0.0,
-                    transmissionMap: material.transmissionMap || null,
-                    transparent: material.transparent || false,
-                    
-                    thickness: material.thickness || 0.0,
-                    attenuationColor: new THREE.Color(1, 1, 1),
-                    attenuationDistance: Infinity,
-                
-                    // Configuraciones adicionales
-                    flatShading: false,
-                    side: THREE.FrontSide,
-                    skinning: true
-                });
-                
-                return newMaterial;
+                return material;
             }
             
             scene.add(loadedModel);
@@ -120,10 +68,7 @@ function ImportModel(nameModel, position = { x: 0, y: 0, z: 0 }, rotation = { x:
             loadedModel.scale.set(1, 1, 1);
             loadedModel.position.set(position.x, position.y, position.z);
             loadedModel.rotation.set(rotation.x, rotation.y, rotation.z);
-            
-            // ✅ AGREGAR MIXER AL MODELO
-            loadedModel.mixer = mixer;
-            
+
             console.log('Model loaded successfully!');
             
             // Call the callback with the loaded model
