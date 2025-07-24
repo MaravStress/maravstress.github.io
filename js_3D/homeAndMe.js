@@ -1,12 +1,5 @@
-<<<<<<< HEAD
-import * as THREE from 'https://unpkg.com/three@0.160.1/build/three.module.js';
-import { GLTFLoader } from 'https://unpkg.com/three@0.160.1/examples/jsm/loaders/GLTFLoader.js';
-
-
 //   ================================================================== Configuramos todo lo esencial
-=======
- //   ================================================================== Configuramos todo lo esencial
->>>>>>> parent of ec01fc2 (Ahora tenemos materiales de calidad)
+
         const scene = new THREE.Scene();
         const container = document.getElementById('threejs-container');
         const camera = new THREE.PerspectiveCamera(70, container.clientWidth / container.clientHeight, 0.1, 1000);
