@@ -62,7 +62,7 @@ function ImportModel(nameModel, position = { x: 0, y: 0, z: 0 }, rotation = { x:
                     material.flatShading = false;
                     material.side = THREE.FrontSide;
                     material.alphaTest = material.alphaTest || 0.01;
-                    material.skinning = true;
+                    material.skinning = material.skinning || true;
                     material.transparent = true;
                     material.needsUpdate = true;
                     // material.envMap = envMap;
@@ -108,7 +108,7 @@ function ImportModel(nameModel, position = { x: 0, y: 0, z: 0 }, rotation = { x:
                     // Configuraciones adicionales
                     flatShading: false,
                     side: THREE.FrontSide,
-                    skinning: true
+                    //skinning: true
                 });
                 
                 return newMaterial;
