@@ -94,7 +94,8 @@ function ImportModel(nameModel, position = { x: 0, y: 0, z: 0 }, rotation = { x:
                         //console.log(`Textura de alta calidad configurada: ${prop} - Anisotropía: ${texture.anisotropy}`);
                     }
                 });
-              
+                
+                material.side = THREE.FrontSide;
                 // Forzar actualización del material
                 material.needsUpdate = true;
                 return material;

@@ -20,22 +20,25 @@
     //    scene.environment = envMap;
     //    scene.background = envMap;
 
-       // fx
-        scene.fog = new THREE.FogExp2(0xb4b4b4ff, 0.02);
+     
         //   ==================================================================  Luces
-        const ambientLight = createAmbientLight(0xffffff, 0.6);
+        scene.fog = new THREE.FogExp2(0xb4b4b4ff, 0.02);
+
+
+        const ambientLight = createAmbientLight(0xffffff, 0.5);
         scene.add(ambientLight);
 
-        const directionalLight = createDirectionalLight(0xffffff, 0.8, { x: 5, y: 10, z: 5 }, { x: 0, y: 0, z: 0 }, true);
+        const directionalLight = createDirectionalLight(0xf4c6fdff, 2, { x: 5, y: 10, z: 0 }, { x: 0, y: 0, z: 0 }, true);
         scene.add(directionalLight);
-        
-        // Añadir luz adicional para mejor iluminación
-        const directionalLight2 = createDirectionalLight(0xffffff, 0.4, { x: -5, y: 5, z: -5 }, { x: 0, y: 0, z: 0 }, true);
+
+        const directionalLight2 = createDirectionalLight(0xfdc6c6ff, 0.8, { x: -5, y: 5, z: -5 }, { x: 0, y: 0, z: 0 }, false);
         scene.add(directionalLight2);
 
-        
-        
+        const directionalLight3 = createDirectionalLight(0xffffff, 0.8, { x: -5, y: 5, z: 5 }, { x: 0, y: 0, z: 0 }, false);
+        scene.add(directionalLight3);
 
+        const pointLight = createPointLight({ x: 0, y: -3.8, z: -1 }, 0xeec9ff, 15, 2, 2, true);
+        scene.add(pointLight);
         //  ================================================================== Cargamos modelos
         // Declaracion de modelos
         let home = null;
