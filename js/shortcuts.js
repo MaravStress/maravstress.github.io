@@ -20,27 +20,28 @@ function ImportModel(nameModel, position = { x: 0, y: 0, z: 0 }, rotation = { x:
                     action.play();
                 });
                 
-               // console.log(`Animaciones encontradas para ${nameModel}:`, gltf.animations.length);
             }
             
             // Configurar el modelo (mantener código existente)
             loadedModel.traverse(function (child) {
                 if (child.isMesh) {
-                    // Configurar el material correctamente
-                    if (child.material) {
-                        // Si es un array de materiales
-                        if (Array.isArray(child.material)) {
-                            child.material = child.material.map(material => configureMaterial(material));
-                        } else {
-                            child.material = configureMaterial(child.material);
-                        }
-                        //console.log(`Material configurado para ${nameModel}:`, child.material);
-                    }
-                    
+
                     // Configurar geometría
                     if (child.geometry) {
                         child.geometry.computeVertexNormals();
                         child.geometry.computeBoundingBox();
+                    }
+                    
+                    // FORZAR FORMATO CORRECTO DE TEXTURAS
+                    if (child.material) {
+                        // Si es un array de materiales
+                        if (Array.isArray(child.material)) {
+                            child.material.forEach(material => {
+                                configureMaterial(material);
+                            });
+                        } else {
+                            configureMaterial(child.material);
+                        }
                     }
                     
                     // Habilitar sombras
@@ -51,100 +52,53 @@ function ImportModel(nameModel, position = { x: 0, y: 0, z: 0 }, rotation = { x:
                     child.frustumCulled = false;
                 }
             });
-            
-            // Función auxiliar para configurar materiales
+
             function configureMaterial(material) {
+                // Configurar todas las texturas para que usen el formato correcto
+                const textureProperties = ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'emissiveMap', 'bumpMap', 'displacementMap'];
+                
+                textureProperties.forEach(prop => {
+                    if (material[prop]) {
+                        const texture = material[prop];
+                        
+                        // Forzar formato RGBA y tipo UnsignedByte para texturas sRGB
+                        if (prop === 'map' || prop === 'emissiveMap') {
+                            texture.format = THREE.RGBAFormat;
+                            texture.type = THREE.UnsignedByteType;
+                            texture.colorSpace = THREE.SRGBColorSpace;
+                        } else {
+                            // Para normal maps, roughness, metalness, etc.
+                            texture.format = THREE.RGBAFormat;
+                            texture.type = THREE.UnsignedByteType;
+                            texture.colorSpace = THREE.NoColorSpace;
+                        }
+                        
+                        // CONFIGURACIONES DE ALTA CALIDAD
+                        texture.flipY = false; // Importante para GLB
+                        texture.generateMipmaps = true;
+                        
+                        // FILTROS DE ALTA CALIDAD
+                        texture.minFilter = THREE.LinearMipmapLinearFilter; // Mejor calidad para distancia
+                        texture.magFilter = THREE.LinearFilter; // Mejor calidad para cerca
+                        
+                        // CONFIGURACIÓN DE ANISOTROPÍA PARA MÁXIMA CALIDAD
+                        texture.anisotropy = 16; // Máxima anisotropía soportada (mejora calidad en ángulos)
+                        
+                        // WRAPPING
+                        texture.wrapS = THREE.RepeatWrapping;
+                        texture.wrapT = THREE.RepeatWrapping;
+                        
+                        // FORZAR ACTUALIZACIÓN
+                        texture.needsUpdate = true;
+                        
+                        //console.log(`Textura de alta calidad configurada: ${prop} - Anisotropía: ${texture.anisotropy}`);
+                    }
+                });
+              
                 // Forzar actualización del material
                 material.needsUpdate = true;
-                
-                // Si ya es PhysicalMaterial, solo configurar propiedades básicas
-                if (material.isMeshPhysicalMaterial) {
-                    material.flatShading = false;
-                    material.side = THREE.FrontSide;
-                    material.alphaTest = material.alphaTest || 0.01;
-                    material.skinning = material.skinning || true;
-                    material.transparent = material.transparent || false;
-                    material.needsUpdate = true;
-                    // material.envMap = envMap;
-                    material.envMapIntensity = 1;
-                    material.depthWrite = true;
-                    return material;
-                }
-                
-                // Para cualquier otro tipo de material, convertir a PhysicalMaterial
-                const newMaterial = new THREE.MeshPhysicalMaterial({
-                    // Propiedades básicas (disponibles en todos los materiales)
-                    color: material.color || new THREE.Color(0xffffff),
-                    map: material.map,
-                    transparent: material.transparent,
-                    opacity: material.opacity !== undefined ? material.opacity : 1.0,
-                    alphaTest: material.alphaTest || 0.01,
-                    
-                    // Propiedades avanzadas (si están disponibles)
-                    normalMap: material.normalMap || null,
-                    roughnessMap: material.roughnessMap || null,
-                    metalnessMap: material.metalnessMap || null,
-                    aoMap: material.aoMap || null,
-                    emissive: material.emissive || new THREE.Color(0x000000),
-                    emissiveMap: material.emissiveMap || null,
-                    
-                    // Valores específicos según el tipo original
-                    metalness: material.metalness || 0.0,
-                    roughness: material.roughness || (material.isMeshPhongMaterial ? 0.7 : 0.5),
-                    
-                    // Propiedades específicas de PhysicalMaterial
-                    clearcoat: material.clearcoat || 0.0,
-                    clearcoatRoughness: material.clearcoatRoughness || 0.0,
-                    reflectivity: material.reflectivity || 0.5,
-                    ior: material.ior || 1.5,
-                    transmission: material.transmission || 0.0,
-                    transmissionMap: material.transmissionMap || null,
-                    transparent: material.transparent || false,
-                    
-                    thickness: material.thickness || 0.0,
-                    attenuationColor: new THREE.Color(1, 1, 1),
-                    attenuationDistance: Infinity,
-                
-                    // Configuraciones adicionales
-                    flatShading: false,
-                    side: THREE.FrontSide,
-                    //skinning: true
-                });
-               // Configurar texturas para evitar problemas sRGB
-                if (newMaterial.map) {
-                    console.log('Configuring texture for material:', newMaterial.map);
-                    newMaterial.map.colorSpace = THREE.SRGBColorSpace;
-                    newMaterial.map.generateMipmaps = true;
-                    newMaterial.map.minFilter = THREE.LinearMipmapLinearFilter;
-                    newMaterial.map.magFilter = THREE.LinearFilter;
-                    newMaterial.map.wrapS = THREE.RepeatWrapping;
-                    newMaterial.map.wrapT = THREE.RepeatWrapping;
-                    newMaterial.map.needsUpdate = true;
-                }
-                
-                // Configurar normal map
-                if (newMaterial.normalMap) {
-                    newMaterial.normalMap.colorSpace = THREE.NoColorSpace;
-                    newMaterial.normalMap.generateMipmaps = true;
-                    newMaterial.normalMap.needsUpdate = true;
-                }
-                
-                // Configurar roughness map
-                if (newMaterial.roughnessMap) {
-                    newMaterial.roughnessMap.colorSpace = THREE.NoColorSpace;
-                    newMaterial.roughnessMap.generateMipmaps = true;
-                    newMaterial.roughnessMap.needsUpdate = true;
-                }
-                
-                // Configurar metalness map
-                if (newMaterial.metalnessMap) {
-                    newMaterial.metalnessMap.colorSpace = THREE.NoColorSpace;
-                    newMaterial.metalnessMap.generateMipmaps = true;
-                    newMaterial.metalnessMap.needsUpdate = true;
-                }
-                return newMaterial;
+                return material;
             }
-            
             scene.add(loadedModel);
             
             // Configurar escala, posición y rotación por defecto
@@ -292,4 +246,6 @@ function createHemisphereLight(
     light.position.set(position.x, position.y, position.z);
     return light;
 }
+
+
 
