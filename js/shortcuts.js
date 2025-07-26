@@ -63,11 +63,11 @@ function ImportModel(nameModel, position = { x: 0, y: 0, z: 0 }, rotation = { x:
                     material.side = THREE.FrontSide;
                     material.alphaTest = material.alphaTest || 0.01;
                     material.skinning = material.skinning || true;
-                    material.transparent = true;
+                    material.transparent = material.transparent || false;
                     material.needsUpdate = true;
                     // material.envMap = envMap;
                     material.envMapIntensity = 1;
-                    material.depthWrite = false;
+                    material.depthWrite = true;
                     return material;
                 }
                 
@@ -110,7 +110,38 @@ function ImportModel(nameModel, position = { x: 0, y: 0, z: 0 }, rotation = { x:
                     side: THREE.FrontSide,
                     //skinning: true
                 });
+               // Configurar texturas para evitar problemas sRGB
+                if (newMaterial.map) {
+                    console.log('Configuring texture for material:', newMaterial.map);
+                    newMaterial.map.colorSpace = THREE.SRGBColorSpace;
+                    newMaterial.map.generateMipmaps = true;
+                    newMaterial.map.minFilter = THREE.LinearMipmapLinearFilter;
+                    newMaterial.map.magFilter = THREE.LinearFilter;
+                    newMaterial.map.wrapS = THREE.RepeatWrapping;
+                    newMaterial.map.wrapT = THREE.RepeatWrapping;
+                    newMaterial.map.needsUpdate = true;
+                }
                 
+                // Configurar normal map
+                if (newMaterial.normalMap) {
+                    newMaterial.normalMap.colorSpace = THREE.NoColorSpace;
+                    newMaterial.normalMap.generateMipmaps = true;
+                    newMaterial.normalMap.needsUpdate = true;
+                }
+                
+                // Configurar roughness map
+                if (newMaterial.roughnessMap) {
+                    newMaterial.roughnessMap.colorSpace = THREE.NoColorSpace;
+                    newMaterial.roughnessMap.generateMipmaps = true;
+                    newMaterial.roughnessMap.needsUpdate = true;
+                }
+                
+                // Configurar metalness map
+                if (newMaterial.metalnessMap) {
+                    newMaterial.metalnessMap.colorSpace = THREE.NoColorSpace;
+                    newMaterial.metalnessMap.generateMipmaps = true;
+                    newMaterial.metalnessMap.needsUpdate = true;
+                }
                 return newMaterial;
             }
             
@@ -121,7 +152,7 @@ function ImportModel(nameModel, position = { x: 0, y: 0, z: 0 }, rotation = { x:
             loadedModel.position.set(position.x, position.y, position.z);
             loadedModel.rotation.set(rotation.x, rotation.y, rotation.z);
             
-            // ✅ AGREGAR MIXER AL MODELO
+            //  AGREGAR MIXER AL MODELO
             loadedModel.mixer = mixer;
             
             console.log('Model loaded successfully!');
@@ -261,3 +292,4 @@ function createHemisphereLight(
     light.position.set(position.x, position.y, position.z);
     return light;
 }
+
