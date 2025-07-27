@@ -202,6 +202,8 @@ let _proyectos = [];
       document.getElementById('project-title').value = '';
       document.getElementById('project-short-description').value = '';
       document.getElementById('project-long-description').value = '';
+      document.getElementById('project-link').value = '';
+      document.getElementById('project-link-text').value = '';
       new bootstrap.Modal(document.getElementById('projectModal')).show();
     }
 
@@ -212,6 +214,8 @@ let _proyectos = [];
       document.getElementById('project-title').value = project.title;
       document.getElementById('project-short-description').value = project.shortDescription;
       document.getElementById('project-long-description').value = project.longDescription;
+      document.getElementById('project-link').value = project.link || '';
+      document.getElementById('project-link-text').value = project.linkText || '';
       new bootstrap.Modal(document.getElementById('projectModal')).show();
     }
 
@@ -236,7 +240,9 @@ let _proyectos = [];
         id: document.getElementById('project-id').value,
         title: document.getElementById('project-title').value,
         shortDescription: document.getElementById('project-short-description').value,
-        longDescription: document.getElementById('project-long-description').value
+        longDescription: document.getElementById('project-long-description').value,
+        link: document.getElementById('project-link').value,
+        linkText: document.getElementById('project-link-text').value
       };
       
       const index = document.getElementById('project-index').value;
