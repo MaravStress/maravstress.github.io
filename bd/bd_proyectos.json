@@ -3,12 +3,16 @@
     "id": "dialofy",
     "title": "Dialofy - Easy Dialogue System",
     "shortDescription": "Add interactive dialogue to your game in minutes.",
-    "longDescription": "Create interactive, branching dialogue fast. No coding. Node-based editor. Customizable UI. Supports multi-language & AI-generated dialogue (coming soon). Ideal for RPGs, narratives, and more."
+    "longDescription": "Create interactive, branching dialogue fast. No coding. Node-based editor. Customizable UI. Supports multi-language & AI-generated dialogue (coming soon). Ideal for RPGs, narratives, and more.\n",
+    "link": "https://assetstore.unity.com/packages/tools/behavior-ai/dialofy-easy-dialogue-system-312875",
+    "linkText": "Asset Store"
   },
   {
     "id": "trap",
     "title": "Trap Night",
     "shortDescription": "Trap Night is a rhythmic video game where you must tap on the little figures at the precise moment to rap and thus defeat your opponents.",
-    "longDescription": "🔥🔥 Welcome to Trap Night 🔥🔥\n\nTrap Night is a rhythmic video game where you must tap on the little figures at the precise moment to rap and thus defeat your opponents. Inspired by rap battles and trap music. Trap Night features the best beats with the best artists.\n\nGoogle Play:\n\nhttps://play.google.com/store/apps/details?id=com.MaravStress.Trapnight"
+    "longDescription": "🔥🔥 Welcome to Trap Night 🔥🔥\n<br>\nTrap Night is a rhythmic video game where you must tap on the little figures at the precise moment to rap and thus defeat your opponents. Inspired by rap battles and trap music. Trap Night features the best beats with the best artists.",
+    "link": "https://play.google.com/store/apps/details?id=com.MaravStress.Trapnight",
+    "linkText": "Google Play"
   }
 ]

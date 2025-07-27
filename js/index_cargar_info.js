@@ -92,11 +92,12 @@ async function loadProyectos() {
     }
 }
 
-function mostrarModalProyecto(proyecto) { // Actualizar el contenido del modal
+function mostrarModalProyecto(proyecto) { 
     // Texto
     document.getElementById('proyectoModalLabel').textContent = proyecto.title;
     document.getElementById('modal-descripcion-corta').textContent = proyecto.shortDescription;
-    document.getElementById('modal-descripcion-larga').textContent = proyecto.longDescription;
+    document.getElementById('modal-descripcion-larga').innerHTML = proyecto.longDescription; 
+    
     // imagenes:
     const modalbanner = document.getElementById('modal-banner');
     const modalImagenes1 = document.getElementById('modal-imagenes-1');
@@ -107,6 +108,21 @@ function mostrarModalProyecto(proyecto) { // Actualizar el contenido del modal
     modalImagenes1.src = `bd/img/${proyecto.id}/img-1.png`;
     modalImagenes2.src = `bd/img/${proyecto.id}/img-2.png`;
     modalImagenes3.src = `bd/img/${proyecto.id}/img-3.png`;
+    
+    // Manejar el botón del link
+    const linkContainer = document.getElementById('modal-project-link-container');
+    linkContainer.innerHTML = '';
+    
+    if (proyecto.link && proyecto.link.trim() !== '') {
+        const linkButton = document.createElement('a');
+        linkButton.href = proyecto.link;
+        linkButton.target = '_blank';
+        linkButton.rel = 'noopener noreferrer';
+        linkButton.className = 'btn btn-primary';
+        linkButton.textContent = proyecto.linkText || 'Ver Proyecto';
+        linkContainer.appendChild(linkButton);
+    }
+    
     // Mostrar el modal usando Bootstrap
     const modal = new bootstrap.Modal(document.getElementById('proyectoModal'));
     modal.show();
