@@ -14,5 +14,13 @@
     "longDescription": "🔥🔥 Welcome to Trap Night 🔥🔥\n<br>\nTrap Night is a rhythmic video game where you must tap on the little figures at the precise moment to rap and thus defeat your opponents. Inspired by rap battles and trap music. Trap Night features the best beats with the best artists.",
     "link": "https://play.google.com/store/apps/details?id=com.MaravStress.Trapnight",
     "linkText": "Google Play"
+  },
+  {
+    "id": "reck",
+    "title": "Reck - speakeasy",
+    "shortDescription": "Geoffrey provides you with party games from all around the world.",
+    "longDescription": "I developed the complete logic and UI/UX design for a drinking game app with a speakeasy aesthetic, a project conceived by a Spanish team looking for a developer to bring their concept to life. I joined the project because I was drawn to the originality of their proposal, and together we created an immersive experience that combines dynamic mechanics with a visually appealing interface consistent with the mysterious and elegant atmosphere of speakeasies.",
+    "link": "https://marav-stress.itch.io/reck",
+    "linkText": "itch.io"
   }
 ]
