@@ -1,68 +1,69 @@
 /* Absolutes */
 .Absolute {
-    position: absolute;
+  position: absolute;
 }
 .AbsoluteCenter {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .AbsoluteTop {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .AbsoluteBottom {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .AbsoluteLeft {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
 }
 .AbsoluteRight {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
 }
 
 /* FX */
 .bg-blur {
-    background-color: rgba(255, 255, 255, 0.3) !important;
-    --bs-bg-opacity: 0.3 !important;
-    backdrop-filter: blur(10px) saturate(150%) url(#glass-distortion) !important;
-    -webkit-backdrop-filter: blur(10px) saturate(150%);
-    --bs-card-bg: rgba(255, 255, 255, 0.3) !important;
-  
-   
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  --bs-bg-opacity: 0.3 !important;
+  backdrop-filter: blur(10px) saturate(150%) /* url(#glass-distortion) */ !important;
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  --bs-card-bg: rgba(255, 255, 255, 0.3) !important;
 }
-.bg-blur-8{
-
-    background-color: rgba(255, 255, 255, 0.6) !important;
-    --bs-bg-opacity: 0.6 !important;
-    backdrop-filter: blur(10px) saturate(150%) brightness(2) url(#glass-distortion) !important;
-    -webkit-backdrop-filter: blur(10px) saturate(150%);
-    --bs-card-bg: rgba(255, 255, 255, 0.6) !important;
+.bg-blur-8 {
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  --bs-bg-opacity: 0.6 !important;
+  backdrop-filter: blur(10px) saturate(150%) brightness(2)
+    /* url(#glass-distortion) */ !important;
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  --bs-card-bg: rgba(255, 255, 255, 0.6) !important;
 }
 
 .hover-zoom {
-    transform: scale(1);
-    transition: 0.3s ease;
+  transform: scale(1);
+  transition: 0.3s ease;
 }
 .hover-zoom:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
-.parallax-bg-1, .parallax-bg-2, .parallax-bg-3, .bg-banner {
-    background-attachment:initial;
-    background-size: cover; 
-    background-position: center; 
-    position: relative;
+.parallax-bg-1,
+.parallax-bg-2,
+.parallax-bg-3,
+.bg-banner {
+  background-attachment: initial;
+  background-size: cover;
+  background-position: center;
+  position: relative;
 }
