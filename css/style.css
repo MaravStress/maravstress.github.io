@@ -37,15 +37,14 @@
 .bg-blur {
   background-color: rgba(255, 255, 255, 0.3) !important;
   --bs-bg-opacity: 0.3 !important;
-  backdrop-filter: blur(10px) saturate(150%) /* url(#glass-distortion) */ !important;
+  backdrop-filter: blur(10px) saturate(150%)  url(#glass-distortion)  !important;
   -webkit-backdrop-filter: blur(10px) saturate(150%);
   --bs-card-bg: rgba(255, 255, 255, 0.3) !important;
 }
 .bg-blur-8 {
   background-color: rgba(255, 255, 255, 0.6) !important;
   --bs-bg-opacity: 0.6 !important;
-  backdrop-filter: blur(10px) saturate(150%) brightness(2)
-    /* url(#glass-distortion) */ !important;
+  backdrop-filter: blur(10px) saturate(150%) brightness(2) url(#glass-distortion)  !important;
   -webkit-backdrop-filter: blur(10px) saturate(150%);
   --bs-card-bg: rgba(255, 255, 255, 0.6) !important;
 }
@@ -62,8 +61,9 @@
 .parallax-bg-2,
 .parallax-bg-3,
 .bg-banner {
-  background-attachment: initial;
+  background-attachment: fixed;
   background-size: cover;
   background-position: center;
+  
   position: relative;
 }

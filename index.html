@@ -101,31 +101,31 @@
     <script src="js/index_cargar_info.js"></script>
     <script>
         // FX
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxBg3 = document.querySelectorAll('.parallax-bg-3');
-            const parallaxBg2 = document.querySelectorAll('.parallax-bg-2');
-            const parallaxBg1 = document.querySelectorAll('.parallax-bg-1');
+        // window.addEventListener('scroll', () => {
+        //     const scrolled = window.pageYOffset;
+        //     const parallaxBg3 = document.querySelectorAll('.parallax-bg-3');
+        //     const parallaxBg2 = document.querySelectorAll('.parallax-bg-2');
+        //     const parallaxBg1 = document.querySelectorAll('.parallax-bg-1');
 
-            parallaxBg3.forEach(bg => {
-                const offsetParallax = bg.offsetTop + 100; 
-                const speedParallax = 0.3; 
-                const yPos = (scrolled - offsetParallax) * speedParallax;
-                bg.style.backgroundPosition = `center ${yPos}px`;
-            });
-            parallaxBg2.forEach(bg => {
-                const offsetParallax = bg.offsetTop + 100; 
-                const speedParallax = 0.2; 
-                const yPos = (scrolled - offsetParallax) * speedParallax;
-                bg.style.backgroundPosition = `center ${yPos}px`;
-            });
-            parallaxBg1.forEach(bg => {
-                const offsetParallax = bg.offsetTop + 50;
-                const speedParallax = 0.1; 
-                const yPos = (scrolled - offsetParallax) * speedParallax;
-                bg.style.backgroundPosition = `center ${yPos}px`;
-            });
-        });
+        //     parallaxBg3.forEach(bg => {
+        //         const offsetParallax = bg.offsetTop + 100; 
+        //         const speedParallax = 0.3; 
+        //         const yPos = (scrolled - offsetParallax) * speedParallax;
+        //         bg.style.backgroundPosition = `center ${yPos}px`;
+        //     });
+        //     parallaxBg2.forEach(bg => {
+        //         const offsetParallax = bg.offsetTop + 100; 
+        //         const speedParallax = 0.2; 
+        //         const yPos = (scrolled - offsetParallax) * speedParallax;
+        //         bg.style.backgroundPosition = `center ${yPos}px`;
+        //     });
+        //     parallaxBg1.forEach(bg => {
+        //         const offsetParallax = bg.offsetTop + 50;
+        //         const speedParallax = 0.1; 
+        //         const yPos = (scrolled - offsetParallax) * speedParallax;
+        //         bg.style.backgroundPosition = `center ${yPos}px`;
+        //     });
+        // });
 
         // Cargar habilidades y proyectos al cargar la página
         document.addEventListener('DOMContentLoaded', loadHabilidades);
