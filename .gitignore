@@ -1,5 +1,10 @@
 # Carpetas de diseño
 #UIUX_design/
+*.blend
+*.blend1
+*.blend2
+*.blend3
+*.blend4
 
 # Archivos temporales
 *.tmp
