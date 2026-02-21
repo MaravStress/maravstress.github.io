@@ -1,0 +1,52 @@
+[
+  {
+    "nombre": "Front end",
+    "habilidades": [
+      "HTML",
+      "CSS",
+      "JS",
+      "Three.js",
+      "Bootstrap"
+    ]
+  },
+  {
+    "nombre": "Back end",
+    "habilidades": [
+      "Node.js",
+      "PHP"
+    ]
+  },
+  {
+    "nombre": "Base de datos",
+    "habilidades": [
+      "My SQL",
+      "SQL Server",
+      ".json",
+      ".xml"
+    ]
+  },
+  {
+    "nombre": "UI & UX",
+    "habilidades": [
+      "Figma",
+      "Adobe Suite",
+      "Affinity Suite"
+    ]
+  },
+  {
+    "nombre": "Game Dev",
+    "habilidades": [
+      "Unity",
+      "AR & VR",
+      "C#"
+    ]
+  },
+  {
+    "nombre": "3D",
+    "habilidades": [
+      "Blender",
+      "Maya 3D",
+      "Adobe Substance 3D Painter"
+    ]
+  }
+]

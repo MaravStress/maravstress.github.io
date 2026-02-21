@@ -1,0 +1,10 @@
+.app-container {
+  position: relative;
+  width: 100%;
+}
+
+.content-overlay {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
