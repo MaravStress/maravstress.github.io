@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-const FRAME_COUNT = 251; // 0000 to 0250
+const FRAME_COUNT = 625; // 0000 to 0250
 
 const currentFrame = (index: number) => (
   `${import.meta.env.BASE_URL}bg/${index.toString().padStart(4, '0')}.webp`
