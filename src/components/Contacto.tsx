@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment } from '@react-three/drei';
 import * as THREE from 'three';
-import './Contacto.css';
+import '../style/Contacto.css';
 import { FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import { SiUpwork } from 'react-icons/si';
 
@@ -29,11 +29,11 @@ const Contacto: React.FC = () => {
   return (
     <section className="contacto-section">
       <div className="contacto-container glass-panel">
-        
+
         <div className="contacto-info">
           <h2>Get in Touch</h2>
           <p>Feel free to reach out to me for any exciting projects or collaborations!</p>
-          
+
           <div className="social-links">
             <a href="mailto:your.email@example.com" className="social-btn" aria-label="Email">
               <FaEnvelope /> Email Me
