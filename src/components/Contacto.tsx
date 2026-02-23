@@ -1,29 +1,8 @@
-import React, { useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Environment } from '@react-three/drei';
-import * as THREE from 'three';
+import React from 'react';
+import Contacto3D from './Contacto3D';
 import '../style/Contacto.css';
 import { FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import { SiUpwork } from 'react-icons/si';
-
-// Placeholder 3D component. 
-// Uses a simple Box if model fails to load, but attempts to load a placeholder or user model.
-const CharacterModel = () => {
-  const meshRef = useRef<THREE.Mesh>(null);
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.5;
-    }
-  });
-
-  return (
-    <mesh ref={meshRef}>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color="#2563eb" />
-    </mesh>
-  );
-};
 
 const Contacto: React.FC = () => {
   return (
@@ -47,15 +26,7 @@ const Contacto: React.FC = () => {
           </div>
         </div>
 
-        <div className="contacto-3d">
-          <Canvas camera={{ position: [0, 0, 3], fov: 50 }}>
-            <ambientLight intensity={0.5} />
-            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
-            <CharacterModel />
-            <OrbitControls enableZoom={false} />
-            <Environment preset="city" />
-          </Canvas>
-        </div>
+        <Contacto3D />
 
       </div>
     </section>

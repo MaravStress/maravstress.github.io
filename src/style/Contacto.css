@@ -79,9 +79,10 @@
 .contacto-3d {
   flex: 1;
   min-height: 300px;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0);
   position: relative;
-  aspect-ratio: 16/9; /* Required 16:9 ratio */
+  aspect-ratio: 16/9;
+  /* Required 16:9 ratio */
 }
 
 @media (min-width: 768px) {
