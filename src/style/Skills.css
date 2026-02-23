@@ -2,7 +2,7 @@
   min-height: 100vh;
   padding: 6rem 2rem;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 }
 
@@ -32,6 +32,7 @@
   color: var(--primary);
   border-bottom: 1px solid var(--glass-border);
   padding-bottom: 0.5rem;
+  text-align: center;
 }
 
 .skill-category ul {

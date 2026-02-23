@@ -22,14 +22,19 @@ const ScrollDots: React.FC<ScrollDotsProps> = ({ points }) => {
 
         // Find nearest point
         let nearestIdx = 0;
-        let minDiff = Infinity;
-        points.forEach((p, idx) => {
-            const diff = Math.abs(currentFraction - p);
-            if (diff < minDiff) {
-                minDiff = diff;
-                nearestIdx = idx;
-            }
-        });
+
+        if (currentFraction < points[0]) {
+            nearestIdx = 0;
+        } else {
+            let minDiff = Infinity;
+            points.forEach((p, idx) => {
+                const diff = Math.abs(currentFraction - p);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    nearestIdx = idx;
+                }
+            });
+        }
 
         if (activePoint !== nearestIdx) {
             setActivePoint(nearestIdx);
@@ -58,7 +63,7 @@ const ScrollDots: React.FC<ScrollDotsProps> = ({ points }) => {
                     isSnapping.current = false;
                 }
             }
-        }, 150);
+        }, 200);
     }, [points, activePoint]);
 
     const snapToPoint = (index: number) => {

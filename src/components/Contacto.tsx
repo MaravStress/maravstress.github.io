@@ -35,13 +35,13 @@ const Contacto: React.FC = () => {
           <p>Feel free to reach out to me for any exciting projects or collaborations!</p>
 
           <div className="social-links">
-            <a href="mailto:your.email@example.com" className="social-btn" aria-label="Email">
+            <a href="mailto:eliamjesusparedes@gmail.com" className="social-btn" aria-label="Email">
               <FaEnvelope /> Email Me
             </a>
-            <a href="https://www.upwork.com/" target="_blank" rel="noopener noreferrer" className="social-btn upwork-btn">
+            <a href="https://www.upwork.com/freelancers/~01297e972c464635aa?mp_source=share" target="_blank" rel="noopener noreferrer" className="social-btn upwork-btn">
               <SiUpwork /> Upwork
             </a>
-            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className="social-btn linkedin-btn">
+            <a href="https://www.linkedin.com/in/eliam-paredes-803660186/" target="_blank" rel="noopener noreferrer" className="social-btn linkedin-btn">
               <FaLinkedin /> LinkedIn
             </a>
           </div>

@@ -1,8 +1,8 @@
 .estudios-section {
   min-height: 100vh;
-  padding: 6rem 2rem;
+  padding: 6rem 2rem 6rem 15vw;
   display: flex;
-  justify-content: flex-end; /* As per requirement "muestra en la parte derecha de la mis estudios" */
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -14,7 +14,6 @@
 .section-title {
   font-size: 2.5rem;
   margin-bottom: 2rem;
-  text-align: right;
 }
 
 .estudios-grid {
@@ -33,7 +32,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .estudio-card:hover {
@@ -55,11 +54,12 @@
 }
 
 .upwork-profile .profile-image {
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
+  aspect-ratio: 1;
   border-radius: 50%;
-  background-color: #cbd5e1;
-  background-image: url('https://placehold.co/100x100'); /* Placeholder */
+  background-image: url('/yo.jpg');
+  /* Placeholder */
   background-size: cover;
 }
 

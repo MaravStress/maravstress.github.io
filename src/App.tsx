@@ -1,6 +1,5 @@
 import { ReactLenis } from 'lenis/react';
 import VideoBackground from './components/VideoBackground';
-import Intro from './components/Intro';
 import Estudios from './components/Estudios';
 import Skills from './components/Skills';
 import Proyectos from './components/Proyectos';
@@ -17,9 +16,10 @@ function App() {
         <VideoBackground />
         <ScrollDots points={scrollPoints} />
         <div className="content-overlay">
-          <Intro />
+          <div style={{ height: '212.5vh' }}></div>
           <Estudios />
           <Skills />
+          {/* <div style={{ height: '56.25vh' }}></div> */}
           <Proyectos />
           <Contacto />
         </div>

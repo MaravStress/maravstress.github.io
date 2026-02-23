@@ -2,9 +2,11 @@
   --primary: #2563eb;
   --bg-color: #f8fafc;
   --text-color: #0f172a;
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.3);
-  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.4) 100%);
+  --glass-border-top: rgba(255, 255, 255, 0.9);
+  --glass-border-left: rgba(255, 255, 255, 0.7);
+  --glass-border-right-bottom: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.12), inset 0 2px 4px 0 rgba(255, 255, 255, 0.6);
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   color-scheme: light;
 }
@@ -23,7 +25,12 @@ body {
   line-height: 1.5;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1.2;
 }
 
@@ -39,11 +46,38 @@ a:hover {
 
 .glass-panel {
   background: var(--glass-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--glass-border-top);
+  border-left: 1px solid var(--glass-border-left);
+  border-right: 1px solid var(--glass-border-right-bottom);
+  border-bottom: 1px solid var(--glass-border-right-bottom);
   box-shadow: var(--glass-shadow);
-  border-radius: 16px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Subtle shine effect on hover */
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -200%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: skewX(-20deg);
+  transition: all 0.7s ease;
+  pointer-events: none;
+  z-index: 1;
+}
 
+.glass-panel:hover {
+  box-shadow: 0 16px 50px 0 rgba(0, 0, 0, 0.15), inset 0 2px 4px 0 rgba(255, 255, 255, 0.8);
+}
+
+.glass-panel:hover::before {
+  left: 200%;
+}

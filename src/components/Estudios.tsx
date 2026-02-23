@@ -5,7 +5,6 @@ const Estudios: React.FC = () => {
   return (
     <section className="estudios-section">
       <div className="estudios-container">
-        <h2 className="section-title">Estudios & Experiencia</h2>
 
         <div className="estudios-grid">
           {/* Top Row */}
@@ -22,7 +21,7 @@ const Estudios: React.FC = () => {
           </div>
 
           {/* Bottom Full Width block */}
-          <div className="estudio-card glass-panel upwork-card" style={{ gridArea: 'upwork' }}>
+          <div className="estudio-card glass-panel upwork-card" onClick={() => window.open('https://www.upwork.com/freelancers/~01297e972c464635aa?mp_source=share', '_blank')} style={{ gridArea: 'upwork' }}>
             <div className="upwork-profile">
               <div className="profile-image"></div>
             </div>

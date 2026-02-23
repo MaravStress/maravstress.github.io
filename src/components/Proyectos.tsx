@@ -6,7 +6,7 @@ const Proyectos: React.FC = () => {
   return (
     <section className="proyectos-section">
       <div className="proyectos-container">
-        <h2 className="section-title">Proyectos Recientes</h2>
+        <h2 className="section-title glass-panel title-panel title-center">Projects</h2>
         <div className="proyectos-grid">
           {projectsData.map((project) => (
             <div key={project.id} className="proyecto-card glass-panel">

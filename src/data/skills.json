@@ -1,23 +1,25 @@
 [
   {
+    "nombre": "Soft skills",
+    "habilidades": [
+      "Leadership",
+      "Teamwork",
+      "Problem solving",
+      "Adaptability",
+      "Professionalism"
+    ]
+  },
+  {
     "nombre": "Front end",
     "habilidades": [
-      "HTML",
-      "CSS",
-      "JS",
-      "Three.js",
-      "Bootstrap"
+      "HTML, CSS, JS",
+      "React, Next.js",
+      "Three.js, GSAP",
+      "Bootstrap, Tailwind CSS"
     ]
   },
   {
-    "nombre": "Back end",
-    "habilidades": [
-      "Node.js",
-      "PHP"
-    ]
-  },
-  {
-    "nombre": "Base de datos",
+    "nombre": "Data Base",
     "habilidades": [
       "My SQL",
       "SQL Server",
