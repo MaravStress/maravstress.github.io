@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Environment, useGLTF } from '@react-three/drei';
+import { Environment, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
 const CharacterModel = () => {
@@ -102,7 +102,6 @@ const Contacto3D: React.FC = () => {
                 <Suspense fallback={null}>
                     <CharacterModel />
                 </Suspense>
-                {/* <OrbitControls enableZoom={false} /> */}
                 <Environment preset="city" />
             </Canvas>
         </div>
