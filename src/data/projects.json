@@ -1,5 +1,13 @@
 [
   {
+    "id": "planeao",
+    "title": "Planeao",
+    "shortDescription": "A custom-built workspace for planning, organizing, and productivity tools.",
+    "longDescription": "Planeao is a personal productivity platform I built from scratch, tailored specifically to how I like to plan and organize my life. I'm constantly developing and adding new tools that fit my daily workflow. Feel free to explore—if any of these tools happen to help you out as well, I'm always glad to share!",
+    "link": "https://maravstress.github.io/planeao/",
+    "linkText": "Web App"
+  },
+  {
     "id": "dialofy",
     "title": "Dialofy - Easy Dialogue System",
     "shortDescription": "Add interactive dialogue to your game in minutes.",
@@ -14,13 +22,5 @@
     "longDescription": "🔥🔥 Welcome to Trap Night 🔥🔥\n<br>\nTrap Night is a rhythmic video game where you must tap on the little figures at the precise moment to rap and thus defeat your opponents. Inspired by rap battles and trap music. Trap Night features the best beats with the best artists.\n<br><br>\n\n<a href=\"https://www.youtube.com/watch?v=upMmBqcSIBM\" target=\"_blank\" >Video Trap night 🔥</a>\n<br> <br>\n<a href=\"https://www.behance.net/gallery/196957071/Trap-night\" target=\"_blank\" >Design 🎨</a>\n",
     "link": "https://play.google.com/store/apps/details?id=com.MaravStress.Trapnight",
     "linkText": "Google Play"
-  },
-  {
-    "id": "reck",
-    "title": "Reck - speakeasy",
-    "shortDescription": "Geoffrey provides you with party games from all around the world.",
-    "longDescription": "I developed the complete logic and UI/UX design for a drinking game app with a speakeasy aesthetic, a project conceived by a Spanish team looking for a developer to bring their concept to life. I joined the project because I was drawn to the originality of their proposal, and together we created an immersive experience that combines dynamic mechanics with a visually appealing interface consistent with the mysterious and elegant atmosphere of speakeasies.",
-    "link": "https://marav-stress.itch.io/reck",
-    "linkText": "itch.io"
   }
 ]

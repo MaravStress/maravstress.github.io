@@ -14,12 +14,12 @@
     "habilidades": [
       "HTML, CSS, JS",
       "React, Next.js",
-      "Three.js, GSAP",
+      "Three.js, react-three-fiber",
       "Bootstrap, Tailwind CSS"
     ]
   },
   {
-    "nombre": "Data Base",
+    "nombre": "Backend & DB",
     "habilidades": [
       "My SQL, SQL Server",
       ".json, .xml",
