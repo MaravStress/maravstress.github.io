@@ -21,10 +21,10 @@
   {
     "nombre": "Data Base",
     "habilidades": [
-      "My SQL",
-      "SQL Server",
-      ".json",
-      ".xml"
+      "My SQL, SQL Server",
+      ".json, .xml",
+      "Firebase",
+      "Supabase"
     ]
   },
   {
