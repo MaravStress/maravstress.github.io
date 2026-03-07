@@ -1,21 +1,45 @@
 import React, { useEffect, useRef } from 'react';
 
+interface VideoBackgroundProps {
+  onProgress?: (progress: number) => void;
+  onComplete?: () => void;
+}
+
 const FRAME_COUNT = 625; // 0000 to 0250
 
 const currentFrame = (index: number) => (
   `${import.meta.env.BASE_URL}bg/${index.toString().padStart(4, '0')}.webp`
 );
 
-const VideoBackground: React.FC = () => {
+const VideoBackground: React.FC<VideoBackgroundProps> = ({ onProgress, onComplete }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Preload images
   const imagesRef = useRef<HTMLImageElement[]>([]);
+  const callbacks = useRef({ onProgress, onComplete });
 
   useEffect(() => {
+    callbacks.current = { onProgress, onComplete };
+  }, [onProgress, onComplete]);
+
+  useEffect(() => {
+    let loadedCount = 0;
+
+    const handleImageLoad = () => {
+      loadedCount++;
+      if (callbacks.current.onProgress) {
+        callbacks.current.onProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
+      }
+      if (loadedCount === FRAME_COUNT) {
+        if (callbacks.current.onComplete) callbacks.current.onComplete();
+      }
+    };
+
     // Preload all frames
     for (let i = 0; i < FRAME_COUNT; i++) {
       const img = new Image();
+      img.onload = handleImageLoad;
+      img.onerror = handleImageLoad;
       img.src = currentFrame(i);
       imagesRef.current.push(img);
     }

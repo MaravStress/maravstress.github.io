@@ -1,5 +1,7 @@
+import { useState, useEffect } from 'react';
 import { ReactLenis } from 'lenis/react';
 import VideoBackground from './components/VideoBackground';
+import LoadingScreen from './components/LoadingScreen';
 import Estudios from './components/Estudios';
 import Skills from './components/Skills';
 import Proyectos from './components/Proyectos';
@@ -9,11 +11,24 @@ import './style/App.css';
 
 function App() {
   const scrollPoints = [0.128, 0.34, 0.5, 0.75, 1];
+  const [isLoading, setIsLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    if (!isLoading) {
+      window.scrollTo(0, 0);
+    }
+  }, [isLoading]);
 
   return (
-    <ReactLenis root options={{ lerp: 0.05, syncTouch: true }}>
-      <div className="app-container">
-        <VideoBackground />
+    <>
+      {isLoading && <LoadingScreen progress={progress} />}
+      <ReactLenis root options={{ lerp: 0.05, syncTouch: true }}>
+        <div className="app-container">
+          <VideoBackground 
+            onProgress={setProgress} 
+            onComplete={() => setIsLoading(false)} 
+          />
         <ScrollDots points={scrollPoints} />
         <div className="content-overlay">
           <div style={{ height: '212.5vh' }}></div>
@@ -25,6 +40,7 @@ function App() {
         </div>
       </div>
     </ReactLenis>
+    </>
   );
 }
 
