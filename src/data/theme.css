@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+/* 
+  Global Theme Configuration (Light & Dark Mode Support)
+*/
+
+@theme {
+    /* Dynamic Semantic Colors */
+    --color-background: var(--bg);
+    --color-foreground: var(--fg);
+    --color-background-secondary: var(--bg-secondary);
+    --color-panel: var(--panel-bg);
+    --color-panel-border: var(--panel-border);
+    --color-text-muted: var(--text-muted);
+
+    /* Brand Colors (Creative/Modern Magenta & Cyan vibe) */
+    --color-brand-primary: #d946ef;
+    /* Magenta brillante */
+    --color-brand-primary-light: #f472b6;
+    /* Magenta claro para acentos y hover */
+    --color-brand-secondary: #06b6d4;
+    /* Azul cian brillante */
+    --color-brand-secondary-light: #22d3ee;
+    /* Azul cian claro */
+    --color-brand-dark: #090212;
+    /* Fondo violeta oscuro absoluto */
+    --color-brand-darker: #040108;
+
+    /* Typography */
+    --font-display: "Space Grotesk", sans-serif;
+    --font-body: "Plus Jakarta Sans", sans-serif;
+}
+
+/* Light Theme */
+:root {
+    --bg: #fdfafb;
+    --fg: #0f0717;
+    --bg-secondary: #f7f1f6;
+    --panel-bg: rgba(255, 255, 255, 0.7);
+    --panel-border: rgba(217, 70, 239, 0.12);
+    --text-muted: #6b5a72;
+}
+
+/* Dark Theme (Applying dark creative tint) */
+.dark {
+    --bg: #040108;
+    --fg: #fdfafb;
+    --bg-secondary: #0b0314;
+    --panel-bg: rgba(11, 3, 20, 0.75);
+    --panel-border: rgba(217, 70, 239, 0.18);
+    --text-muted: #9b8da9;
+}
