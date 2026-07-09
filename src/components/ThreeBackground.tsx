@@ -21,7 +21,7 @@ export const PlayerModel = () => {
                 materials.forEach((mat, index) => {
                     if (mat.name && mat.name.toLowerCase().includes('glass')) {
                         const glassMaterial = new THREE.MeshPhysicalMaterial({
-                            color: mat.color || new THREE.Color('#ffffff'),
+                            color: ('color' in mat) ? (mat as any).color : new THREE.Color('#ffffff'),
                             roughness: 0.1,
                             metalness: 0.1,
                             transmission: 0.9, // high transmission makes it transparent glass
