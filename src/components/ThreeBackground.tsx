@@ -1,54 +1,33 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useGLTF, useAnimations } from '@react-three/drei';
+import { useGLTF, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
-export const PlayerModel = () => {
-    const groupRef = useRef<THREE.Group>(null);
-    const mouseRef = useRef({ x: 0, y: 0 });
-    const { scene, animations } = useGLTF('/player.glb');
-    const { actions } = useAnimations(animations, groupRef);
+const CharacterModel = () => {
+    const group = useRef<THREE.Group>(null);
+    const headGroupRef = useRef<THREE.Group>(null);
+    const bodyGroupRef = useRef<THREE.Group>(null);
+
+    const { scene: bodyScene } = useGLTF('/Marav_body.glb');
+    const { scene: headScene } = useGLTF('/Marav_head.glb');
     const { viewport } = useThree();
 
-    // Traverse the 3D scene and apply physical glass materials to glass elements
-    useEffect(() => {
-        if (!scene) return;
-        scene.traverse((child) => {
-            if ((child as THREE.Mesh).isMesh) {
-                const mesh = child as THREE.Mesh;
-                const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
-                
-                materials.forEach((mat, index) => {
-                    if (mat.name && mat.name.toLowerCase().includes('glass')) {
-                        const glassMaterial = new THREE.MeshPhysicalMaterial({
-                            color: ('color' in mat) ? (mat as any).color : new THREE.Color('#ffffff'),
-                            roughness: 0.1,
-                            metalness: 0.1,
-                            transmission: 0.9, // high transmission makes it transparent glass
-                            ior: 1.5,          // index of refraction for real glass
-                            thickness: 1.0,    // glass thickness
-                            transparent: true,
-                            opacity: 1,
-                            clearcoat: 1.0,
-                            clearcoatRoughness: 0.1,
-                        });
-                        
-                        if (Array.isArray(mesh.material)) {
-                            mesh.material[index] = glassMaterial;
-                        } else {
-                            mesh.material = glassMaterial;
-                        }
-                    }
-                });
-            }
-        });
-    }, [scene]);
+    const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
 
-    // Track cursor coordinates globally on the window
+    useEffect(() => {
+        const handleResize = () => {
+            setIsDesktop(window.innerWidth >= 1024);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const globalMousePos = useRef({ x: 0, y: 0 });
+
     useEffect(() => {
         const handleMouseMove = (event: MouseEvent) => {
-            mouseRef.current.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouseRef.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            globalMousePos.current.x = (event.clientX / window.innerWidth) * 2 - 1;
+            globalMousePos.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
         };
 
         window.addEventListener('mousemove', handleMouseMove);
@@ -57,64 +36,90 @@ export const PlayerModel = () => {
         };
     }, []);
 
-    // Setup and play the idle animation
     useEffect(() => {
-        const idleActionName = Object.keys(actions).find(
-            (name) => name.toLowerCase().includes('idle')
-        );
-        
-        if (idleActionName && actions[idleActionName]) {
-            actions[idleActionName].reset().fadeIn(0.5).play();
-        } else {
-            // Fallback: play the first animation if idle is not found
-            const firstAction = Object.keys(actions)[0];
-            if (firstAction && actions[firstAction]) {
-                actions[firstAction].reset().fadeIn(0.5).play();
-            }
-        }
+        const applyMaterials = (child: THREE.Object3D) => {
+            const mesh = child as THREE.Mesh;
+            if (mesh.isMesh && mesh.material) {
+                const materialName = Array.isArray(mesh.material)
+                    ? mesh.material[0].name
+                    : mesh.material.name;
 
-        return () => {
-            if (idleActionName && actions[idleActionName]) {
-                actions[idleActionName].fadeOut(0.5);
+                if (materialName && materialName.toLowerCase().includes('glass')) {
+                    const glassMaterial = new THREE.MeshPhysicalMaterial({
+                        color: 0xffffff,
+                        transmission: 1,     // High transmission
+                        opacity: 1,
+                        metalness: 0,
+                        roughness: 0.2,      // Smooth reflective glass
+                        ior: 1.04,            // Index of refraction
+                        thickness: 0.5,      // Thickness
+                        envMapIntensity: 1,  // Reflect environment
+                        transparent: true,
+                    });
+
+                    if (Array.isArray(mesh.material)) {
+                        mesh.material[0] = glassMaterial;
+                    } else {
+                        mesh.material = glassMaterial;
+                    }
+                }
             }
         };
-    }, [actions]);
 
-    // Smoothly rotate the character to face the cursor
+        bodyScene.traverse(applyMaterials);
+        headScene.traverse(applyMaterials);
+    }, [bodyScene, headScene]);
+
     useFrame(() => {
-        if (groupRef.current) {
-            const targetRotationY = mouseRef.current.x * 0.4;
-            const targetRotationX = -mouseRef.current.y * 0.15;
-            
-            groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetRotationY, 0.05);
-            groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetRotationX, 0.05);
+        const vectorOffset = new THREE.Vector2(-0.8, 0);
+
+        const targetRotationYHead = (globalMousePos.current.x + vectorOffset.x) * 0.5;
+        const targetRotationXHead = (-globalMousePos.current.y + vectorOffset.y) * 0.5;
+
+        const targetRotationYBody = (globalMousePos.current.x + vectorOffset.x) * 0.15;
+        const targetRotationXBody = (-globalMousePos.current.y + vectorOffset.y) * 0.1;
+
+        if (headGroupRef.current) {
+            headGroupRef.current.rotation.y = THREE.MathUtils.lerp(headGroupRef.current.rotation.y, targetRotationYHead, 0.1);
+            headGroupRef.current.rotation.x = THREE.MathUtils.lerp(headGroupRef.current.rotation.x, targetRotationXHead, 0.1);
+        }
+
+        if (bodyGroupRef.current) {
+            bodyGroupRef.current.rotation.y = THREE.MathUtils.lerp(bodyGroupRef.current.rotation.y, targetRotationYBody, 0.05);
+            bodyGroupRef.current.rotation.x = THREE.MathUtils.lerp(bodyGroupRef.current.rotation.x, targetRotationXBody, 0.05);
         }
     });
 
     // Responsively scale and position the model in the canvas
-    const isDesktop = viewport.width > 6;
-    const posX = isDesktop ? viewport.width * 0.22 : 0;
-    const posY = isDesktop ? -1.8 : -1.4;
-    const scale = isDesktop ? 2.5 : 1.9;
+    const posX = isDesktop ? viewport.width * 0.20 : 0;
+    const posY = isDesktop ? -0.85 : -0.76;
+    const scale = isDesktop ? 0.65 : 0.46;
 
     return (
-        <group ref={groupRef} position={[posX, posY, 0]} scale={scale} dispose={null}>
-            <primitive object={scene} />
+        <group ref={group} position={[posX, posY, 0]} scale={scale} dispose={null}>
+            <group ref={bodyGroupRef}>
+                <primitive object={bodyScene} />
+                <group ref={headGroupRef} position={[0, 1.34, 0]}>
+                    <primitive object={headScene} />
+                </group>
+            </group>
         </group>
     );
 };
 
-// Preload player GLTF model asset
-useGLTF.preload('/player.glb');
+useGLTF.preload('/Marav_body.glb');
+useGLTF.preload('/Marav_head.glb');
 
 export default function ThreeBackground({ className }: { className?: string }) {
     return (
-        <div className={className || "absolute inset-0 z-0 h-screen w-full overflow-hidden pointer-events-none"}>
-            <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
-                <ambientLight intensity={0.8} />
-                <directionalLight position={[10, 10, 5]} intensity={1.5} color="#00ffff" />
-                <directionalLight position={[-10, -10, -5]} intensity={1} color="#d946ef" />
-                <PlayerModel />
+        <div className={className || "absolute top-0 left-0 z-0 h-screen w-full overflow-hidden pointer-events-none"}>
+            <Canvas camera={{ position: [0, 0, 1], fov: 50 }}>
+                <ambientLight intensity={0.5} />
+                <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
+                <Suspense fallback={null}>
+                    <CharacterModel />
+                </Suspense>
+                <Environment preset="city" />
             </Canvas>
         </div>
     );

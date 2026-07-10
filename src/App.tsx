@@ -6,6 +6,7 @@ import Experience from './components/Experience'
 import Features from './components/Features'
 import Skills from './components/Skills'
 import Contact from './components/Contact'
+import FloatingNavbar from './components/FloatingNavbar'
 
 function App() {
   useEffect(() => {
@@ -32,6 +33,7 @@ function App() {
 
   return (
     <main className="w-full min-h-screen selection:bg-brand-primary/30 selection:text-brand-primary-light relative">
+      <FloatingNavbar />
       <Hero />
       <Reviews />
       <Experience />

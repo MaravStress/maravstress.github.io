@@ -11,25 +11,16 @@ export default function Hero() {
         document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' });
     };
 
-    // Helper to format name to Title Case
-    const formatName = (name: string) => {
-        return name
-            .toLowerCase()
-            .split(' ')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ');
-    };
-
     return (
-        <section className="relative w-full min-h-screen flex flex-col justify-center overflow-hidden py-20 lg:py-24">
+        <section id="hero-section" className="relative w-full min-h-screen flex flex-col justify-center overflow-hidden py-20 lg:py-24">
             {/* 3D Background */}
-            <ThreeBackground className="absolute inset-0 z-0 w-full h-full pointer-events-none" />
+            <ThreeBackground className="absolute top-0 left-0 z-0 w-full h-screen overflow-hidden pointer-events-none" />
 
             {/* Content Container (Header) */}
             <div className="relative z-10 w-full max-w-7xl mx-auto px-6 mb-8 mt-12 lg:mt-0">
 
                 <h1 className="text-8xl md:text-8xl font-display font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-brand-primary via-purple-500 to-brand-secondary drop-shadow-sm leading-tight">
-                    {formatName(profile.personalInfo.name)}
+                    {profile.personalInfo.name.toUpperCase()}
                 </h1>
                 <span className="text-brand-secondary font-display text-sm tracking-widest uppercase font-bold block mb-2">
                     PROGRAMADOR & DISEÑADOR 3D
@@ -98,10 +89,10 @@ export default function Hero() {
                                 Contáctame
                             </button>
                             <button
-                                onClick={handleScrollToReviews}
+                                onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
                                 className="px-6 py-3 border border-panel-border hover:border-brand-secondary text-foreground hover:text-brand-secondary-light font-display rounded-lg hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer"
                             >
-                                Ver Testimonios
+                                Ver Proyectos
                             </button>
                         </div>
                     </div>
