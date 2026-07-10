@@ -121,6 +121,34 @@
       ],
       "imagen": "https://www.upwork.com/att/download/portfolio/persons/uid/1448145539951136768/profile/projects/files/38c95ca9-b33c-480f-bf38-1f8e0e133353",
       "descripcion": "🔥🔥 Welcome to Trap Night 🔥🔥\n\nTrap Night is a rhythmic video game where you must tap on the little figures at the precise moment to rap and thus defeat your opponents. Inspired by rap battles and trap music. Trap Night features the best beats with the best artists.\n\n[Google Play](https://play.google.com/store/apps/details?id=com.MaravStress.Trapnight)"
+    },
+    {
+      "id": "Programming-1776260544680",
+      "titulo": "Reck",
+      "etiquetas": [
+        "c#",
+        "Unity Engine",
+        "UI&UX",
+        "iOS"
+      ],
+      "imagen": "https://images.unsplash.com/photo-1551103782-8ab07afd45c1?q=80&w=1000&auto=format&fit=crop",
+      "descripcion": "Diseño de interfaz de usuario (UI & UX) y programación de mecánicas de juego en C# para el videojuego móvil 'Reck', publicado con éxito en la App Store de iOS.\n\n[App Store](https://apps.apple.com/)"
+    },
+    {
+      "id": "Programming-1776260544681",
+      "titulo": "Promo Design",
+      "etiquetas": [
+        "Web Development",
+        "PHP",
+        "HTML5",
+        "CSS 3",
+        "Support"
+      ],
+      "imagen": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop",
+      "descripcion": "Desarrollo a medida, soporte informático y mantenimiento integral de la plataforma web corporativa de Promo Design dp Group, garantizando velocidad de carga y experiencia de usuario optimizada.\n\n[Promo Design](https://promodp.com)"
     }
-  ]
+  ],
+  "links": {
+    "upwork": "https://www.upwork.com/freelancers/~017c66dbe126786cbe"
+  }
 }

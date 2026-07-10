@@ -1,28 +1,32 @@
 {
   "personalInfo": {
     "name": "ELIAM PAREDES",
-    "location": "Santo Domingo, RD",
+    "location": "Santo Domingo Este, RD",
     "email": "eliamjesusparedes@gmail.com",
     "phone": "+18296510720",
-    "website": "https://maravstress.github.io"
+    "website": "maravstress.github.io",
+    "linkedin": "https://www.linkedin.com/in/eliam-paredes-803660186/"
   },
-  "summary": "Soy un profesional apasionado por la programación y el diseño, con una fuerte inclinación hacia el 3D. Mi formación en multimedia y mi actual carrera en ingeniería de software me permiten abordar proyectos desde una perspectiva técnica y creativa. Soluciones innovadoras que integren arte, código y tecnología.",
+  "summary": "Soy un profesional apasionado del desarrollo de SaaS y el diseño 3D. Mi formación en multimedia y mi actual carrera en ingeniería de software me permiten abordar proyectos desde una perspectiva técnica y creativa. Soluciones innovadoras que integren arte, código y tecnología.",
   "experience": [
     {
       "id": "exp-1",
-      "company": "Upwork",
-      "location": "Online",
+      "company": "UPWORK",
+      "location": "Remoto",
       "title": "Diseñador 3D y Game Designer",
-      "dates": "Abr 2024 Presente",
+      "dates": "Abr 2024 - Presente",
       "bullets": [
-        "Servicios freelance como diseñador 3D y programador de videojuegos."
+        "Diseñador 3D",
+        "Animador 3D",
+        "Programador de vidoejuegos usando unity",
+        "Integración de Three.js en sitios web"
       ],
       "references": ""
     },
     {
       "id": "exp-2",
-      "company": "Marav Studios",
-      "location": "Online",
+      "company": "MARAV STUDIOS",
+      "location": "Remoto",
       "title": "Director / Game Dev / Marketing",
       "dates": "Nov 2020 - Presente",
       "bullets": [
@@ -33,8 +37,8 @@
     },
     {
       "id": "exp-3",
-      "company": "Promo Design dp Group",
-      "location": "Santo Domingo Este",
+      "company": "PROMO DESIGN DP GROUP",
+      "location": "Presencial",
       "title": "Diseñador gráfico / Diseño web",
       "dates": "Nov 2020 - Abr 2024",
       "bullets": [
@@ -46,10 +50,10 @@
     },
     {
       "id": "exp-4",
-      "company": "Reckers",
-      "location": "Online",
+      "company": "RECKERS",
+      "location": "Remoto",
       "title": "Game Dev / UI & UX Designer",
-      "dates": "Ago 2020 Nov 2021",
+      "dates": "Ago 2020 - Nov 2021",
       "bullets": [
         "Desarrollo del videojuego \"Reck\" (App Store) y diseño de UI & UX."
       ],
@@ -59,16 +63,16 @@
   "education": [
     {
       "id": "edu-1",
-      "institution": "Universidad APEC",
+      "institution": "UNIVERSIDAD APEC",
       "location": "",
       "degree": "Ingeniería de Software",
-      "dates": "Abr 2024 Presente",
+      "dates": "Abr 2024 - Presente",
       "thesis": "",
       "courses": []
     },
     {
       "id": "edu-2",
-      "institution": "ITLA (Instituto Tecnológico de Las Américas)",
+      "institution": "ITLA (INSTITUTO TECNOLÓGICO DE LAS AMÉRICAS)",
       "location": "",
       "degree": "Tecnólogo en Multimedia",
       "dates": "Sep 2020 - Abr 2024",
@@ -79,27 +83,61 @@
   "skills": [
     {
       "id": "skill-1",
-      "categoryName": "Front end",
+      "categoryName": "Integración de APIs para el uso de IA en Aplicaciones",
       "skills": [
-        "HTML",
-        "CSS",
-        "JS",
-        "Three.js",
-        "Bootstrap"
+        "Gemini flash 2.5",
+        "Nano Banano 2",
+        "Veo 3",
+        "Elevenlabs v2",
+        "Elevenlabs v3"
       ]
     },
     {
       "id": "skill-2",
-      "categoryName": "Back end",
+      "categoryName": "Herramientas",
       "skills": [
-        "Node.js",
-        "PHP"
+        "Azure Devops",
+        "Jira",
+        "GIT"
       ]
     },
     {
       "id": "skill-3",
+      "categoryName": "Metodologías",
+      "skills": [
+        "Scrum",
+        "Ágil"
+      ]
+    },
+    {
+      "id": "skill-4",
+      "categoryName": "Front end",
+      "skills": [
+        "React",
+        "HTML5",
+        "CSS 3",
+        "JavaScript",
+        "Three.js",
+        "Bootstrap",
+        "Tailwind"
+      ]
+    },
+    {
+      "id": "skill-5",
+      "categoryName": "Back end",
+      "skills": [
+        "Node.js",
+        "PHP",
+        "Supabase",
+        "Firebase"
+      ]
+    },
+    {
+      "id": "skill-6",
       "categoryName": "Base de datos",
       "skills": [
+        "Excel Avanzado",
+        "Power BI",
         "My SQL",
         "SQL Server",
         ".json",
@@ -107,16 +145,7 @@
       ]
     },
     {
-      "id": "skill-4",
-      "categoryName": "UI & UX",
-      "skills": [
-        "Figma",
-        "Adobe Suite",
-        "Affinity Suite"
-      ]
-    },
-    {
-      "id": "skill-5",
+      "id": "skill-7",
       "categoryName": "Game Dev",
       "skills": [
         "Unity",
@@ -125,7 +154,7 @@
       ]
     },
     {
-      "id": "skill-6",
+      "id": "skill-8",
       "categoryName": "3D",
       "skills": [
         "Blender",
@@ -134,15 +163,25 @@
       ]
     },
     {
-      "id": "skill-7",
+      "id": "skill-9",
       "categoryName": "VFX / Edición de video",
       "skills": [
         "Blender Motion Traking",
+        "Blender Geometry Node",
         "Davinci Resolve"
       ]
     },
     {
-      "id": "skill-8",
+      "id": "skill-10",
+      "categoryName": "UI & UX",
+      "skills": [
+        "Figma",
+        "Adobe Suite",
+        "Affinity Suite"
+      ]
+    },
+    {
+      "id": "skill-11",
       "categoryName": "Idiomas",
       "skills": [
         "Español (Nativo)",
