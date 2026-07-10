@@ -3,8 +3,8 @@ import { ChevronDown, Mail, Linkedin } from 'lucide-react';
 import profile from '../data/profileData.json';
 
 export default function Hero() {
-    const handleScrollToExperience = () => {
-        document.getElementById('experience-section')?.scrollIntoView({ behavior: 'smooth' });
+    const handleScrollToReviews = () => {
+        document.getElementById('reviews-section')?.scrollIntoView({ behavior: 'smooth' });
     };
 
     const handleScrollToContact = () => {
@@ -98,10 +98,10 @@ export default function Hero() {
                                 Contáctame
                             </button>
                             <button
-                                onClick={handleScrollToExperience}
+                                onClick={handleScrollToReviews}
                                 className="px-6 py-3 border border-panel-border hover:border-brand-secondary text-foreground hover:text-brand-secondary-light font-display rounded-lg hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer"
                             >
-                                Ver Experiencia
+                                Ver Testimonios
                             </button>
                         </div>
                     </div>
@@ -147,9 +147,9 @@ export default function Hero() {
             {/* Scroll indicator */}
             <div
                 className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center animate-bounce text-text-muted hover:text-foreground transition-colors cursor-pointer"
-                onClick={handleScrollToExperience}
+                onClick={handleScrollToReviews}
             >
-                <span className="text-sm font-medium tracking-widest uppercase mb-2">Ver Experiencia</span>
+                <span className="text-sm font-medium tracking-widest uppercase mb-2">Ver Testimonios</span>
                 <ChevronDown className="w-6 h-6 text-brand-secondary-light" />
             </div>
         </section>

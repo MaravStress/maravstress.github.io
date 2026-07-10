@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import Lenis from 'lenis'
 import Hero from './components/Hero'
+import Reviews from './components/Reviews'
 import Experience from './components/Experience'
 import Features from './components/Features'
 import Skills from './components/Skills'
@@ -32,6 +33,7 @@ function App() {
   return (
     <main className="w-full min-h-screen selection:bg-brand-primary/30 selection:text-brand-primary-light relative">
       <Hero />
+      <Reviews />
       <Experience />
       <Features />
       <Skills />
