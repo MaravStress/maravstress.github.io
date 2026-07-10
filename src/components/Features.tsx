@@ -1,98 +1,259 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import content from '../data/content.json';
+import { ExternalLink, Code, Sparkles } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const panelsData = content.features.panels;
+interface ProjectData {
+    id: string;
+    titulo: string;
+    etiquetas: string[];
+    imagen: string;
+    descripcion: string;
+}
 
 export default function Features() {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const panelsRef = useRef<HTMLDivElement>(null);
+    const [projects3D, setProjects3D] = useState<ProjectData[]>([]);
+    const [projectsProg, setProjectsProg] = useState<ProjectData[]>([]);
+    const sectionRef = useRef<HTMLDivElement>(null);
+    const row1Ref = useRef<HTMLDivElement>(null);
+    const row2Ref = useRef<HTMLDivElement>(null);
 
+    // Fetch projects data from public/bd.json
     useEffect(() => {
-        let ctx = gsap.context(() => {
-            const panels = gsap.utils.toArray('.feature-panel');
-            const bgPanels = document.querySelectorAll('.feature-bg-panel');
-
-            gsap.to(panels, {
-                xPercent: -100 * (panels.length - 1),
-                ease: "none",
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    pin: true,
-                    scrub: 1,
-                    snap: 1 / (panels.length - 1),
-                    end: () => "+=" + (panelsRef.current?.offsetWidth || 0),
-                    // En cada frame del scroll leemos el progreso y movemos el fondo
-                    onUpdate: (self) => {
-                        // progress va de 0 a 1 mientras el usuario baja
-                        // Mapeamos a un rango de backgroundPosition: 30% (izq) → 70% (der)
-                        const xPos = 30 + self.progress * 40;
-                        bgPanels.forEach((el) => {
-                            (el as HTMLElement).style.backgroundPositionX = `${xPos}%`;
-                        });
-                    }
+        fetch('/bd.json')
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('Failed to fetch bd.json');
                 }
-            });
-        }, containerRef);
-
-        return () => ctx.revert();
+                return res.json();
+            })
+            .then((data) => {
+                setProjects3D(data['3DAnimations'] || []);
+                setProjectsProg(data.Programming || []);
+            })
+            .catch((err) => console.error('Error loading projects:', err));
     }, []);
 
-    const handleNextSection = () => {
-        document.getElementById('skills-section')?.scrollIntoView({ behavior: 'smooth' });
+    // Set up GSAP entrance animation for projects
+    useEffect(() => {
+        if (!sectionRef.current) return;
+
+        const ctx = gsap.context(() => {
+            // Animating title & header
+            gsap.from('.projects-header', {
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                }
+            });
+
+            // Animating Row 1 cards
+            if (row1Ref.current && projects3D.length > 0) {
+                gsap.from(row1Ref.current.children, {
+                    y: 60,
+                    opacity: 0,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: row1Ref.current,
+                        start: 'top 85%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            }
+
+            // Animating Row 2 cards
+            if (row2Ref.current && projectsProg.length > 0) {
+                gsap.from(row2Ref.current.children, {
+                    y: 60,
+                    opacity: 0,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: row2Ref.current,
+                        start: 'top 85%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            }
+        });
+
+        // Trigger a refresh after data loaded to correct heights
+        ScrollTrigger.refresh();
+        const timeoutId = setTimeout(() => ScrollTrigger.refresh(), 200);
+
+        return () => {
+            ctx.revert();
+            clearTimeout(timeoutId);
+        };
+    }, [projects3D, projectsProg]);
+
+    // Helper to parse description and extract Markdown links
+    const parseProjectDescription = (desc: string) => {
+        const linkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/;
+        const match = desc.match(linkRegex);
+
+        let cleanText = desc;
+        let ctaLink = '';
+        let ctaLabel = '';
+
+        if (match) {
+            cleanText = desc.replace(linkRegex, '').trim();
+            ctaLabel = match[1];
+            ctaLink = match[2];
+        }
+
+        // Remove trailing newlines and clean up
+        cleanText = cleanText.replace(/\n+$/, '').trim();
+
+        return { cleanText, ctaLabel, ctaLink };
+    };
+
+    // Render a horizontal card
+    const renderCard = (project: ProjectData, is3D: boolean) => {
+        const { cleanText, ctaLabel, ctaLink } = parseProjectDescription(project.descripcion);
+
+        return (
+            <div 
+                key={project.id}
+                className="w-full lg:w-[48%] xl:w-[31%] min-h-[220px] flex flex-col md:flex-row rounded-2xl glass-panel relative border border-panel-border/60 bg-panel backdrop-blur-xl overflow-hidden hover:border-brand-primary/40 transition-all duration-500 shadow-xl"
+            >
+                {/* Floating shine underlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.01] to-transparent pointer-events-none"></div>
+
+                {/* Left Side: Image */}
+                <div className="w-full md:w-[40%] h-[160px] md:h-full min-h-[160px] shrink-0 overflow-hidden relative border-b md:border-b-0 md:border-r border-panel-border/40">
+                    <img 
+                        src={project.imagen} 
+                        alt={project.titulo} 
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                            // Fallback if image fails to load
+                            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop';
+                        }}
+                    />
+                </div>
+
+                {/* Right Side: Content */}
+                <div className="w-full md:w-[60%] p-6 flex flex-col justify-between gap-4">
+                    <div>
+                        {/* Tags */}
+                        <div className="flex flex-wrap gap-1.5 mb-3">
+                            {project.etiquetas.slice(0, 3).map((tag, i) => (
+                                <span 
+                                    key={i} 
+                                    className={`text-[10px] font-display font-semibold tracking-wider px-2 py-0.5 rounded border ${
+                                        is3D 
+                                        ? 'bg-brand-primary/10 border-brand-primary/20 text-brand-primary-light' 
+                                        : 'bg-brand-secondary/10 border-brand-secondary/20 text-brand-secondary-light'
+                                    }`}
+                                >
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+
+                        {/* Title */}
+                        <h3 className="text-lg font-display font-bold text-foreground mb-2 line-clamp-1">
+                            {project.titulo}
+                        </h3>
+
+                        {/* Description */}
+                        <p className="text-xs text-text-muted font-light leading-relaxed line-clamp-3">
+                            {cleanText}
+                        </p>
+                    </div>
+
+                    {/* CTA Button */}
+                    {ctaLink && (
+                        <a 
+                            href={ctaLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`inline-flex items-center gap-1.5 px-4 py-2 border rounded-lg font-display font-medium text-xs self-start transition-all duration-300 ${
+                                is3D 
+                                ? 'bg-brand-primary/10 border-brand-primary/30 text-brand-primary-light hover:bg-brand-primary hover:text-white hover:border-brand-primary' 
+                                : 'bg-brand-secondary/10 border-brand-secondary/30 text-brand-secondary-light hover:bg-brand-secondary hover:text-white hover:border-brand-secondary'
+                            }`}
+                        >
+                            <span>{ctaLabel || 'Ver Proyecto'}</span>
+                            <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                    )}
+                </div>
+            </div>
+        );
     };
 
     return (
-        <section ref={containerRef} id="features" className="overflow-hidden w-full h-screen bg-background-secondary flex items-center relative transition-colors duration-300">
+        <section 
+            id="features" 
+            ref={sectionRef} 
+            className="w-full py-24 bg-background relative overflow-hidden transition-colors duration-300"
+        >
+            {/* Ambient Background Lights */}
+            <div className="absolute top-1/3 left-[-10%] w-96 h-96 bg-gradient-to-tr from-brand-primary/10 to-brand-secondary/10 rounded-full filter blur-[150px] pointer-events-none animate-pulse"></div>
+            <div className="absolute bottom-1/3 right-[-10%] w-96 h-96 bg-gradient-to-tr from-brand-secondary/10 to-brand-primary/10 rounded-full filter blur-[150px] pointer-events-none"></div>
 
-            <div className="absolute top-1/4 left-1/2 w-96 h-96 bg-brand-primary rounded-full mix-blend-screen filter blur-[200px] opacity-10 pointer-events-none -translate-x-1/2" />
+            <div className="max-w-7xl mx-auto px-6 relative z-10">
+                
+                {/* Header */}
+                <div className="projects-header text-center mb-16 flex flex-col items-center">
+                    <span className="text-brand-primary-light font-display text-sm tracking-widest uppercase mb-3">
+                        [ PORTAFOLIO ]
+                    </span>
+                    <h2 className="text-4xl md:text-6xl font-display font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-text-muted">
+                        Proyectos Destacados
+                    </h2>
+                    <div className="w-20 h-1 bg-gradient-to-r from-brand-primary to-brand-secondary mt-6"></div>
+                </div>
 
-            <div ref={panelsRef} className="flex h-full w-max">
-                {panelsData.map((panel) => (
-                    <div key={panel.id} className="feature-panel w-screen h-full shrink-0 flex items-center justify-center p-6 md:p-12 lg:p-24 relative">
-
-                        <div
-                            className="feature-bg-panel w-full max-w-6xl mx-auto rounded-2xl h-[80vh] relative overflow-hidden flex flex-col md:flex-row shadow-2xl shadow-black/50 border border-white/10"
-                            style={{
-                                backgroundImage: `url(${panel.image})`,
-                                backgroundSize: '180% auto',
-                                backgroundPositionX: '30%',
-                                backgroundPositionY: 'center',
-                                backgroundRepeat: 'no-repeat'
-                            }}
+                {/* Row 1: Arte y Animación 3D */}
+                {projects3D.length > 0 && (
+                    <div className="mb-16">
+                        <div className="flex items-center gap-2 mb-6">
+                            <Sparkles className="w-5 h-5 text-brand-primary" />
+                            <h3 className="text-xl font-display font-bold text-foreground">
+                                Animación y Arte 3D
+                            </h3>
+                        </div>
+                        <div 
+                            ref={row1Ref} 
+                            className="flex flex-wrap gap-6 justify-center lg:justify-start"
                         >
-                            {/* Overlay for better text readability */}
-                            <div className="absolute inset-0 bg-black/30 z-0"></div>
-
-                            {/* Top/Left spacer - shows background image */}
-                            <div className="block w-full h-[45%] md:w-1/2 md:h-full z-10"></div>
-
-                            {/* Bottom/Right content panel with glass effect */}
-                            <div className="w-full h-[55%] md:w-1/2 md:h-full flex flex-col justify-center p-6 md:p-16 gap-4 md:gap-8 bg-panel backdrop-blur-xl border-t md:border-t-0 md:border-l border-panel-border z-10 rounded-b-2xl md:rounded-b-none md:rounded-r-2xl transition-colors duration-300">
-
-                                {/* <div className="text-brand-primary-light font-semibold tracking-wide text-sm">Característica 0{idx + 1}</div> */}
-
-                                <h2 className="text-4xl md:text-5xl font-display font-bold leading-tight drop-shadow-md pb-4 border-b border-panel-border text-foreground">{panel.title}</h2>
-                                <p className="text-lg text-text-muted leading-relaxed font-light">{panel.text}</p>
-
-                                <div className="mt-4">
-                                    <button
-                                        onClick={handleNextSection}
-                                        className="inline-flex items-center gap-3 px-6 py-3 bg-foreground/10 hover:bg-brand-primary text-foreground hover:text-white transition-all duration-300 rounded-lg font-medium border border-panel-border hover:border-brand-primary group shadow-lg"
-                                    >
-                                        <span>{content.features.joinButton}</span>
-                                        <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                    </button>
-                                </div>
-
-                            </div>
+                            {projects3D.map((project) => renderCard(project, true))}
                         </div>
                     </div>
-                ))}
+                )}
+
+                {/* Row 2: Programación y Desarrollo */}
+                {projectsProg.length > 0 && (
+                    <div>
+                        <div className="flex items-center gap-2 mb-6">
+                            <Code className="w-5 h-5 text-brand-secondary" />
+                            <h3 className="text-xl font-display font-bold text-foreground">
+                                Programación y Videojuegos
+                            </h3>
+                        </div>
+                        <div 
+                            ref={row2Ref} 
+                            className="flex flex-wrap gap-6 justify-center lg:justify-start"
+                        >
+                            {projectsProg.map((project) => renderCard(project, false))}
+                        </div>
+                    </div>
+                )}
+
             </div>
         </section>
     );
 }
+
