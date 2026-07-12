@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Loader2, Check, SquarePlus } from 'lucide-react';
-import content from '../data/bd.json';
+import content from '../../data/bd.json';
 
 export default function WaitlistInput() {
     const [email, setEmail] = useState('');

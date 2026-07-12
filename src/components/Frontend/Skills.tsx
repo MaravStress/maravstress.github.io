@@ -1,5 +1,5 @@
 import { Code, Server, Database, Palette, Gamepad2, Box, Film, Languages } from 'lucide-react';
-import profile from '../data/bd.json';
+import profile from '../../data/bd.json';
 
 const getCategoryIcon = (category: string, colorClass: string) => {
     switch (category.toLowerCase()) {

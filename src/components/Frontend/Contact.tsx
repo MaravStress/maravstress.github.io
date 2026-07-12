@@ -1,5 +1,5 @@
-import { Mail, Phone, MapPin, Linkedin, Settings } from 'lucide-react';
-import bd from '../data/bd.json';
+import { Mail, Phone, MapPin, Linkedin, Settings, Github } from 'lucide-react';
+import bd from '../../data/bd.json';
 
 const profile = bd;
 
@@ -9,6 +9,7 @@ interface ContactProps {
 
 export default function Contact({ onEnterBackend }: ContactProps) {
     const upworkUrl = bd.links?.upwork || 'https://www.upwork.com/freelancers/~017c66dbe126786cbe';
+    const githubUrl = bd.links?.github || 'https://github.com/MaravStress';
 
     return (
         <section id="contact-section" className="w-full min-h-screen py-24 px-6 bg-gradient-to-b from-background-secondary to-background relative overflow-hidden transition-colors duration-300">
@@ -82,7 +83,7 @@ export default function Contact({ onEnterBackend }: ContactProps) {
                             <h3 className="text-lg font-display font-bold text-text-muted uppercase tracking-widest text-center">
                                 Enlaces Profesionales
                             </h3>
-                            <div className="grid grid-cols-3 gap-3">
+                             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                                 {/* LinkedIn */}
                                 <a 
                                     href={profile.personalInfo.linkedin} 
@@ -105,6 +106,17 @@ export default function Contact({ onEnterBackend }: ContactProps) {
                                         <path d="M18.57 6.72c-1.89 0-3.32 1.34-3.79 3.23l-.11.56c-.57-1.87-1.42-3.8-2.61-5.18h-2.31v7.65c0 1.37-.87 2.25-2.24 2.25s-2.24-.88-2.24-2.25V5.33H3.01v7.65c0 2.47 1.99 4.3 4.46 4.3s4.46-1.83 4.46-4.3v-.68c.84 1.36 1.77 2.76 2.89 3.65l-1.39 6.72h2.3l1.1-5.32c.59.2 1.22.31 1.88.31 2.87 0 4.96-2.12 4.96-5.18-.01-3.08-2.1-5.24-5.02-5.24zm0 8.35c-1.63 0-2.88-1.02-2.88-3.11s1.25-3.11 2.88-3.11 2.88 1.02 2.88 3.11-1.25 3.11-2.88 3.11z"/>
                                     </svg>
                                     <span className="text-xs font-display font-semibold">Upwork</span>
+                                </a>
+
+                                {/* GitHub */}
+                                <a 
+                                    href={githubUrl} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="glass-panel py-4 flex flex-col items-center justify-center gap-2 hover:border-brand-primary hover:text-brand-primary-light hover:scale-[1.05] transition-all duration-300"
+                                >
+                                    <Github className="w-6 h-6 text-brand-primary" />
+                                    <span className="text-xs font-display font-semibold">GitHub</span>
                                 </a>
 
                                 {/* Backend */}

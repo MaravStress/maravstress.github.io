@@ -1,5 +1,5 @@
 import { Briefcase, MapPin, Calendar, ChevronDown } from 'lucide-react';
-import profile from '../data/bd.json';
+import profile from '../../data/bd.json';
 
 export default function Experience() {
     const handleScrollToProjects = () => {

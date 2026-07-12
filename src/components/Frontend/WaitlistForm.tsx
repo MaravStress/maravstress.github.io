@@ -1,5 +1,5 @@
 import WaitlistInput from './WaitlistInput';
-import content from '../data/bd.json';
+import content from '../../data/bd.json';
 
 export default function WaitlistForm() {
     return (

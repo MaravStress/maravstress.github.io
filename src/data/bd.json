@@ -341,6 +341,10 @@
       ]
     }
   ],
+  "links": {
+    "upwork": "https://www.upwork.com/freelancers/~017c66dbe126786cbe",
+    "github": "https://github.com/MaravStress"
+  },
   "settings": {
     "fontFamily": "Georgia, serif",
     "fontSize": "11pt",

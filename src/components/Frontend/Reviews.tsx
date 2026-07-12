@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Quote, Star } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import bd from '../data/bd.json';
+import bd from '../../data/bd.json';
 
 gsap.registerPlugin(ScrollTrigger);
 

@@ -1,9 +1,10 @@
 import ThreeBackground from './ThreeBackground';
-import { ChevronDown, Mail, Linkedin } from 'lucide-react';
-import profile from '../data/bd.json';
+import { ChevronDown, Mail, Linkedin, Github } from 'lucide-react';
+import profile from '../../data/bd.json';
 
 export default function Hero() {
     const upworkUrl = profile.links?.upwork || 'https://www.upwork.com/freelancers/~017c66dbe126786cbe';
+    const githubUrl = profile.links?.github || 'https://github.com/MaravStress';
 
     const handleScrollToReviews = () => {
         document.getElementById('reviews-section')?.scrollIntoView({ behavior: 'smooth' });
@@ -56,6 +57,17 @@ export default function Hero() {
                             >
                                 <Linkedin className="w-4 h-4 text-brand-primary" />
                                 <span>LinkedIn</span>
+                            </a>
+
+                            {/* GitHub */}
+                            <a
+                                href={githubUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 px-4 py-2 text-sm bg-foreground/5 hover:bg-brand-primary/10 border border-panel-border hover:border-brand-primary text-text-muted hover:text-brand-primary-light rounded-lg transition-all duration-300 group"
+                            >
+                                <Github className="w-4 h-4 text-brand-primary" />
+                                <span>GitHub</span>
                             </a>
 
                             {/* Upwork */}
