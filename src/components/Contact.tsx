@@ -1,5 +1,5 @@
 import { Mail, Phone, MapPin, Linkedin, Globe, Send, Loader2, Check } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import profile from '../data/profileData.json';
 import content from '../data/content.json';
@@ -10,6 +10,18 @@ export default function Contact() {
     const [name, setName] = useState('');
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const [message, setMessage] = useState('');
+    const [upworkUrl, setUpworkUrl] = useState('https://www.upwork.com/freelancers/~017c66dbe126786cbe');
+
+    useEffect(() => {
+        fetch('/bd.json')
+            .then(res => res.json())
+            .then(data => {
+                if (data.links?.upwork) {
+                    setUpworkUrl(data.links.upwork);
+                }
+            })
+            .catch(err => console.error(err));
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -49,6 +61,12 @@ export default function Contact() {
             setStatus('error');
             setMessage(error.message || content.waitlistInput.errorMessage);
         }
+    };
+
+    const getWebsiteUrl = () => {
+        const website = profile.personalInfo.website;
+        if (!website) return '#';
+        return website.startsWith('http') ? website : `https://${website}`;
     };
 
     return (
@@ -128,7 +146,7 @@ export default function Contact() {
                             <div className="grid grid-cols-3 gap-3">
                                 {/* LinkedIn */}
                                 <a 
-                                    href="https://linkedin.com/in/eliam-paredes" 
+                                    href={profile.personalInfo.linkedin} 
                                     target="_blank" 
                                     rel="noopener noreferrer"
                                     className="glass-panel py-4 flex flex-col items-center justify-center gap-2 hover:border-brand-primary hover:text-brand-primary-light hover:scale-[1.05] transition-all duration-300"
@@ -139,7 +157,7 @@ export default function Contact() {
 
                                 {/* Upwork */}
                                 <a 
-                                    href="https://www.upwork.com/freelancers/~017c66dbe126786cbe" 
+                                    href={upworkUrl} 
                                     target="_blank" 
                                     rel="noopener noreferrer"
                                     className="glass-panel py-4 flex flex-col items-center justify-center gap-2 hover:border-brand-secondary hover:text-brand-secondary-light hover:scale-[1.05] transition-all duration-300"
@@ -152,7 +170,7 @@ export default function Contact() {
 
                                 {/* Web */}
                                 <a 
-                                    href={profile.personalInfo.website} 
+                                    href={getWebsiteUrl()} 
                                     target="_blank" 
                                     rel="noopener noreferrer"
                                     className="glass-panel py-4 flex flex-col items-center justify-center gap-2 hover:border-brand-primary hover:text-brand-secondary hover:scale-[1.05] transition-all duration-300"

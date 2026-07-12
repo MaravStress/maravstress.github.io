@@ -1,8 +1,22 @@
+import { useState, useEffect } from 'react';
 import ThreeBackground from './ThreeBackground';
 import { ChevronDown, Mail, Linkedin } from 'lucide-react';
 import profile from '../data/profileData.json';
 
 export default function Hero() {
+    const [upworkUrl, setUpworkUrl] = useState('https://www.upwork.com/freelancers/~017c66dbe126786cbe');
+
+    useEffect(() => {
+        fetch('/bd.json')
+            .then(res => res.json())
+            .then(data => {
+                if (data.links?.upwork) {
+                    setUpworkUrl(data.links.upwork);
+                }
+            })
+            .catch(err => console.error(err));
+    }, []);
+
     const handleScrollToReviews = () => {
         document.getElementById('reviews-section')?.scrollIntoView({ behavior: 'smooth' });
     };
@@ -33,10 +47,9 @@ export default function Hero() {
                 {/* Left Side: Personal Info, Summary */}
                 <div className="lg:col-span-7 flex flex-col gap-6">
 
-                    {/* Main Info Card */}
-                    <div className="flex flex-col gap-6 glass-panel p-8 md:p-12 border-l-4 border-l-brand-primary">
-                        <div className="flex items-center gap-2 text-text-muted text-sm font-medium">
-                            <span className="inline-block w-2.5 h-2.5 rounded-full bg-brand-secondary animate-pulse"></span>
+                    <div className="glass-panel p-6 md:p-8 flex flex-col gap-5 border-t-2 border-t-brand-primary/50 relative overflow-hidden transition-all duration-300">
+                        <div className="flex items-center gap-3 text-sm text-brand-primary-light font-display font-semibold tracking-wide">
+                            <span className="w-2 h-2 rounded-full bg-brand-primary animate-ping"></span>
                             <span>Disponible para proyectos freelance y tiempo completo • {profile.personalInfo.location}</span>
                         </div>
 
@@ -48,7 +61,7 @@ export default function Hero() {
                         <div className="flex flex-wrap gap-3 pt-2">
                             {/* LinkedIn */}
                             <a
-                                href="https://linkedin.com/in/eliam-paredes"
+                                href={profile.personalInfo.linkedin}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center gap-2 px-4 py-2 text-sm bg-foreground/5 hover:bg-brand-primary/10 border border-panel-border hover:border-brand-primary text-text-muted hover:text-brand-primary-light rounded-lg transition-all duration-300 group"
@@ -59,7 +72,7 @@ export default function Hero() {
 
                             {/* Upwork */}
                             <a
-                                href="https://www.upwork.com/freelancers/~017c66dbe126786cbe"
+                                href={upworkUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center gap-2 px-4 py-2 text-sm bg-foreground/5 hover:bg-brand-secondary/10 border border-panel-border hover:border-brand-secondary text-text-muted hover:text-brand-secondary-light rounded-lg transition-all duration-300 group"
