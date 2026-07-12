@@ -30,6 +30,9 @@ export default function FloatingNavbar() {
         };
 
         const callback = (entries: IntersectionObserverEntry[]) => {
+            const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 50;
+            if (isBottom) return;
+
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     setActiveSection(entry.target.id);
@@ -43,7 +46,17 @@ export default function FloatingNavbar() {
             if (obs.el) observer.observe(obs.el);
         });
 
+        const handleScrollDetect = () => {
+            const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 50;
+            if (isBottom) {
+                setActiveSection('contact-section');
+            }
+        };
+
+        window.addEventListener('scroll', handleScrollDetect);
+
         return () => {
+            window.removeEventListener('scroll', handleScrollDetect);
             observers.forEach((obs) => {
                 if (obs.el) observer.unobserve(obs.el);
             });

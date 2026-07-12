@@ -1,21 +1,9 @@
-import { useState, useEffect } from 'react';
 import ThreeBackground from './ThreeBackground';
 import { ChevronDown, Mail, Linkedin } from 'lucide-react';
-import profile from '../data/profileData.json';
+import profile from '../data/bd.json';
 
 export default function Hero() {
-    const [upworkUrl, setUpworkUrl] = useState('https://www.upwork.com/freelancers/~017c66dbe126786cbe');
-
-    useEffect(() => {
-        fetch('/bd.json')
-            .then(res => res.json())
-            .then(data => {
-                if (data.links?.upwork) {
-                    setUpworkUrl(data.links.upwork);
-                }
-            })
-            .catch(err => console.error(err));
-    }, []);
+    const upworkUrl = profile.links?.upwork || 'https://www.upwork.com/freelancers/~017c66dbe126786cbe';
 
     const handleScrollToReviews = () => {
         document.getElementById('reviews-section')?.scrollIntoView({ behavior: 'smooth' });

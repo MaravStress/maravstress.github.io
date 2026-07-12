@@ -1,7 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ExternalLink, Code, Sparkles } from 'lucide-react';
+import bd from '../data/bd.json';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,26 +15,10 @@ interface ProjectData {
 }
 
 export default function Features() {
-    const [projects3D, setProjects3D] = useState<ProjectData[]>([]);
-    const [projectsProg, setProjectsProg] = useState<ProjectData[]>([]);
+    const projects3D = bd['3DAnimations'] || [];
+    const projectsProg = bd.Programming || [];
     const containerRef = useRef<HTMLDivElement>(null);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-    // Fetch projects data from public/bd.json
-    useEffect(() => {
-        fetch('/bd.json')
-            .then((res) => {
-                if (!res.ok) {
-                    throw new Error('Failed to fetch bd.json');
-                }
-                return res.json();
-            })
-            .then((data) => {
-                setProjects3D(data['3DAnimations'] || []);
-                setProjectsProg(data.Programming || []);
-            })
-            .catch((err) => console.error('Error loading projects:', err));
-    }, []);
 
     // Set up GSAP responsive horizontal scroll pinning
     useEffect(() => {

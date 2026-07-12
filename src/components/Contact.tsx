@@ -1,73 +1,14 @@
-import { Mail, Phone, MapPin, Linkedin, Globe, Send, Loader2, Check } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import { supabase } from '../supabaseClient';
-import profile from '../data/profileData.json';
-import content from '../data/content.json';
+import { Mail, Phone, MapPin, Linkedin, Settings } from 'lucide-react';
+import bd from '../data/bd.json';
 
-export default function Contact() {
-    const [email, setEmail] = useState('');
-    const [messageText, setMessageText] = useState('');
-    const [name, setName] = useState('');
-    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-    const [message, setMessage] = useState('');
-    const [upworkUrl, setUpworkUrl] = useState('https://www.upwork.com/freelancers/~017c66dbe126786cbe');
+const profile = bd;
 
-    useEffect(() => {
-        fetch('/bd.json')
-            .then(res => res.json())
-            .then(data => {
-                if (data.links?.upwork) {
-                    setUpworkUrl(data.links.upwork);
-                }
-            })
-            .catch(err => console.error(err));
-    }, []);
+interface ContactProps {
+    onEnterBackend: () => void;
+}
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!email) return;
-
-        setStatus('loading');
-
-        try {
-            // Attempt to insert contact request.
-            const { error } = await supabase.from(content.waitlistInput.tableName).insert([
-                { email, name: name || undefined, message: messageText || undefined }
-            ]);
-
-            if (error) {
-                if (error.message && (error.message.includes('column') || error.code === 'PGRST111')) {
-                    const { error: fallbackError } = await supabase.from(content.waitlistInput.tableName).insert([{ email }]);
-                    if (fallbackError) {
-                        if (fallbackError.code === '23505') {
-                            throw new Error(content.waitlistInput.emailDuplicado);
-                        }
-                        throw fallbackError;
-                    }
-                } else {
-                    if (error.code === '23505') {
-                        throw new Error(content.waitlistInput.emailDuplicado);
-                    }
-                    throw error;
-                }
-            }
-
-            setStatus('success');
-            setMessage(content.waitlistInput.successMessage);
-            setEmail('');
-            setName('');
-            setMessageText('');
-        } catch (error: any) {
-            setStatus('error');
-            setMessage(error.message || content.waitlistInput.errorMessage);
-        }
-    };
-
-    const getWebsiteUrl = () => {
-        const website = profile.personalInfo.website;
-        if (!website) return '#';
-        return website.startsWith('http') ? website : `https://${website}`;
-    };
+export default function Contact({ onEnterBackend }: ContactProps) {
+    const upworkUrl = bd.links?.upwork || 'https://www.upwork.com/freelancers/~017c66dbe126786cbe';
 
     return (
         <section id="contact-section" className="w-full min-h-screen py-24 px-6 bg-gradient-to-b from-background-secondary to-background relative overflow-hidden transition-colors duration-300">
@@ -84,17 +25,15 @@ export default function Contact() {
                         Ponte en Contacto
                     </h2>
                     <p className="text-text-muted mt-4 max-w-lg font-light leading-relaxed">
-                        ¿Tienes una propuesta o quieres colaborar en algún proyecto? Envíame un mensaje o búscame en mis redes.
+                        ¿Tienes una propuesta o quieres colaborar en algún proyecto? Escríbeme o búscame en mis redes.
                     </p>
                     <div className="w-20 h-1 bg-gradient-to-r from-brand-primary to-brand-secondary mt-6"></div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                    
-                    {/* Left Column: Direct Info & Social buttons */}
-                    <div className="lg:col-span-5 flex flex-col justify-between gap-6">
+                <div className="max-w-xl mx-auto w-full">
+                    <div className="flex flex-col gap-8 w-full">
                         <div className="flex flex-col gap-4">
-                            <h3 className="text-xl font-display font-bold text-brand-secondary-light uppercase border-b border-panel-border pb-3">
+                            <h3 className="text-xl font-display font-bold text-brand-secondary-light uppercase border-b border-panel-border pb-3 text-center">
                                 Información de Contacto
                             </h3>
                             
@@ -139,8 +78,8 @@ export default function Contact() {
                         </div>
 
                         {/* Social Buttons Block */}
-                        <div className="flex flex-col gap-4">
-                            <h3 className="text-lg font-display font-bold text-text-muted uppercase tracking-widest">
+                        <div className="flex flex-col gap-4 mt-2">
+                            <h3 className="text-lg font-display font-bold text-text-muted uppercase tracking-widest text-center">
                                 Enlaces Profesionales
                             </h3>
                             <div className="grid grid-cols-3 gap-3">
@@ -168,112 +107,16 @@ export default function Contact() {
                                     <span className="text-xs font-display font-semibold">Upwork</span>
                                 </a>
 
-                                {/* Web */}
-                                <a 
-                                    href={getWebsiteUrl()} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="glass-panel py-4 flex flex-col items-center justify-center gap-2 hover:border-brand-primary hover:text-brand-secondary hover:scale-[1.05] transition-all duration-300"
+                                {/* Backend */}
+                                <button 
+                                    onClick={onEnterBackend}
+                                    className="glass-panel py-4 flex flex-col items-center justify-center gap-2 hover:border-brand-primary hover:text-brand-secondary hover:scale-[1.05] transition-all duration-300 cursor-pointer w-full"
                                 >
-                                    <Globe className="w-6 h-6 text-brand-secondary" />
-                                    <span className="text-xs font-display font-semibold">Sitio Web</span>
-                                </a>
+                                    <Settings className="w-6 h-6 text-brand-secondary" />
+                                    <span className="text-xs font-display font-semibold">Backend</span>
+                                </button>
                             </div>
                         </div>
-                    </div>
-
-                    {/* Right Column: Contact Form */}
-                    <div className="lg:col-span-7 glass-panel p-8 md:p-12 border-t-2 border-t-brand-primary/50 flex flex-col justify-between">
-                        <div>
-                            <h3 className="text-xl font-display font-bold text-foreground mb-2">
-                                Envíame un Mensaje
-                            </h3>
-                            <p className="text-sm text-text-muted mb-8 font-light">
-                                Llena este formulario y me pondré en contacto contigo a la brevedad.
-                            </p>
-
-                            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                                {/* Name Input */}
-                                <div className="flex flex-col gap-2">
-                                    <label htmlFor="contact-name" className="text-xs font-display text-brand-primary-light uppercase tracking-wider">
-                                        Nombre / Empresa
-                                    </label>
-                                    <input 
-                                        type="text" 
-                                        id="contact-name"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        placeholder="Tu nombre o empresa"
-                                        disabled={status === 'loading' || status === 'success'}
-                                        className="w-full px-5 py-3 rounded-lg bg-background-secondary border border-panel-border text-foreground placeholder-text-muted focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all disabled:opacity-50"
-                                    />
-                                </div>
-
-                                {/* Email Input */}
-                                <div className="flex flex-col gap-2">
-                                    <label htmlFor="contact-email" className="text-xs font-display text-brand-secondary-light uppercase tracking-wider">
-                                        Correo Electrónico *
-                                    </label>
-                                    <input 
-                                        type="email" 
-                                        id="contact-email"
-                                        required
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="tu-correo@ejemplo.com"
-                                        disabled={status === 'loading' || status === 'success'}
-                                        className="w-full px-5 py-3 rounded-lg bg-background-secondary border border-panel-border text-foreground placeholder-text-muted focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all disabled:opacity-50"
-                                    />
-                                </div>
-
-                                {/* Message Input */}
-                                <div className="flex flex-col gap-2">
-                                    <label htmlFor="contact-message" className="text-xs font-display text-brand-primary-light uppercase tracking-wider">
-                                        Mensaje
-                                    </label>
-                                    <textarea 
-                                        id="contact-message"
-                                        rows={4}
-                                        value={messageText}
-                                        onChange={(e) => setMessageText(e.target.value)}
-                                        placeholder="Escribe aquí tu mensaje o los detalles del proyecto..."
-                                        disabled={status === 'loading' || status === 'success'}
-                                        className="w-full px-5 py-3 rounded-lg bg-background-secondary border border-panel-border text-foreground placeholder-text-muted focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all disabled:opacity-50 resize-none"
-                                    />
-                                </div>
-
-                                {/* Submit Button */}
-                                <button
-                                    type="submit"
-                                    disabled={status === 'loading' || status === 'success'}
-                                    className="w-full mt-2 py-4 bg-gradient-to-r from-brand-primary to-brand-secondary hover:from-brand-primary-light hover:to-brand-secondary-light text-white font-display font-semibold rounded-lg shadow-lg shadow-brand-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 cursor-pointer"
-                                >
-                                    {status === 'loading' ? (
-                                        <>
-                                            <Loader2 className="w-5 h-5 animate-spin" />
-                                            <span>Estableciendo conexión...</span>
-                                        </>
-                                    ) : status === 'success' ? (
-                                        <>
-                                            <Check className="w-5 h-5" />
-                                            <span>Mensaje Enviado</span>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Send className="w-5 h-5" />
-                                            <span>Enviar Mensaje</span>
-                                        </>
-                                    )}
-                                </button>
-                            </form>
-                        </div>
-
-                        {/* Status feedback message */}
-                        {message && (
-                            <p className={`text-sm font-display font-medium text-center mt-6 ${status === 'success' ? 'text-green-400' : 'text-red-400'}`}>
-                                {message}
-                            </p>
-                        )}
                     </div>
                 </div>
             </div>

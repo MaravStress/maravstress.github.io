@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Lenis from 'lenis'
 import Hero from './components/Hero'
 import Reviews from './components/Reviews'
@@ -7,8 +7,16 @@ import Features from './components/Features'
 import Skills from './components/Skills'
 import Contact from './components/Contact'
 import FloatingNavbar from './components/FloatingNavbar'
+import BackendPanel from './components/BackendPanel'
 
 function App() {
+  const [view, setView] = useState<'landing' | 'backend'>('landing')
+
+  useEffect(() => {
+    // Scroll to top on view change
+    window.scrollTo(0, 0);
+  }, [view]);
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -31,6 +39,10 @@ function App() {
     }
   }, [])
 
+  if (view === 'backend') {
+    return <BackendPanel onBack={() => setView('landing')} />
+  }
+
   return (
     <main className="w-full min-h-screen selection:bg-brand-primary/30 selection:text-brand-primary-light relative">
       <FloatingNavbar />
@@ -39,7 +51,7 @@ function App() {
       <Experience />
       <Features />
       <Skills />
-      <Contact />
+      <Contact onEnterBackend={() => setView('backend')} />
     </main>
   )
 }

@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { supabase } from '../supabaseClient';
 import { Loader2, Check, SquarePlus } from 'lucide-react';
-import content from '../data/content.json';
+import content from '../data/bd.json';
 
 export default function WaitlistInput() {
     const [email, setEmail] = useState('');
@@ -14,24 +13,12 @@ export default function WaitlistInput() {
 
         setStatus('loading');
 
-        try {
-            // Supabase integration
-            const { error } = await supabase.from(content.waitlistInput.tableName).insert([{ email }]);
-            if (error) {
-                // Código de error 23505 significa violación de restricción UNIQUE (correo duplicado) en Postgres/Supabase
-                if (error.code === '23505') {
-                    throw new Error(content.waitlistInput.emailDuplicado);
-                }
-                throw error;
-            }
-
+        // Simula registro exitoso (sin base de datos/BaaS)
+        setTimeout(() => {
             setStatus('success');
             setMessage(content.waitlistInput.successMessage);
             setEmail('');
-        } catch (error: any) {
-            setStatus('error');
-            setMessage(error.message || content.waitlistInput.errorMessage);
-        }
+        }, 800);
     };
 
     return (

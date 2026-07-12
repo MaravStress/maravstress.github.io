@@ -1,7 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Quote, Star } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import bd from '../data/bd.json';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,27 +15,11 @@ interface ReviewData {
 }
 
 export default function Reviews() {
-    const [reviews3D, setReviews3D] = useState<ReviewData[]>([]);
-    const [reviewsProg, setReviewsProg] = useState<ReviewData[]>([]);
+    const reviews3D = bd.reviews_3D || [];
+    const reviewsProg = bd.reviews_Programming || [];
     const sectionRef = useRef<HTMLDivElement>(null);
     const row1Ref = useRef<HTMLDivElement>(null);
     const row2Ref = useRef<HTMLDivElement>(null);
-
-    // Fetch review data from public/bd.json
-    useEffect(() => {
-        fetch('/bd.json')
-            .then((res) => {
-                if (!res.ok) {
-                    throw new Error('Failed to fetch bd.json');
-                }
-                return res.json();
-            })
-            .then((data) => {
-                setReviews3D(data.reviews_3D || []);
-                setReviewsProg(data.reviews_Programming || []);
-            })
-            .catch((err) => console.error('Error loading reviews:', err));
-    }, []);
 
     // Set up GSAP horizontal scroll animations for both rows
     useEffect(() => {
