@@ -37,10 +37,6 @@ export default function Hero() {
                 <div className="lg:col-span-7 flex flex-col gap-6">
 
                     <div className="glass-panel p-6 md:p-8 flex flex-col gap-5 border-t-2 border-t-brand-primary/50 relative overflow-hidden transition-all duration-300">
-                        <div className="flex items-center gap-3 text-sm text-brand-primary-light font-display font-semibold tracking-wide">
-                            <span className="w-2 h-2 rounded-full bg-brand-primary animate-ping"></span>
-                            <span>Disponible para proyectos freelance y tiempo completo • {profile.personalInfo.location}</span>
-                        </div>
 
                         <p className="text-base md:text-lg text-text-muted font-light leading-relaxed">
                             {profile.summary}

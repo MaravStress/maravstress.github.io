@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Trash, Edit, Check } from 'lucide-react';
+import { Plus, Trash, Edit, Check, GripVertical } from 'lucide-react';
 
 interface ProjectEditorProps {
     bdData: any;
@@ -9,7 +9,31 @@ interface ProjectEditorProps {
 export default function ProjectEditor({ bdData, onUpdateProjects }: ProjectEditorProps) {
     const [projectType, setProjectType] = useState<'Programming' | '3DAnimations'>('Programming');
     const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
-    const [projectForm, setProjectForm] = useState({ titulo: '', etiquetas: '', imagen: '', descripcion: '' });
+    const [projectForm, setProjectForm] = useState<{ titulo: string, etiquetas: string, imagen: string, descripcion: string }>({ titulo: '', etiquetas: '', imagen: '', descripcion: '' });
+    const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+
+    const handleDragStart = (index: number) => {
+        setDraggedIndex(index);
+    };
+
+    const handleDragOver = (e: React.DragEvent) => {
+        e.preventDefault();
+    };
+
+    const handleDrop = (index: number) => {
+        if (draggedIndex === null || draggedIndex === index) return;
+
+        const list = [...(bdData[projectType] || [])];
+        const [removed] = list.splice(draggedIndex, 1);
+        list.splice(index, 0, removed);
+
+        onUpdateProjects(projectType, list);
+        setDraggedIndex(null);
+    };
+
+    const handleDragEnd = () => {
+        setDraggedIndex(null);
+    };
 
     const handleSaveProject = (e: React.FormEvent) => {
         e.preventDefault();
@@ -17,8 +41,8 @@ export default function ProjectEditor({ bdData, onUpdateProjects }: ProjectEdito
 
         const tagsArray = projectForm.etiquetas
             .split(',')
-            .map(t => t.trim())
-            .filter(t => t.length > 0);
+            .map((t: string) => t.trim())
+            .filter((t: string) => t.length > 0);
 
         let updatedList = [...(bdData[projectType] || [])];
 
@@ -184,11 +208,25 @@ Puedes añadir un botón al final usando el formato:
                         {(bdData[projectType] || []).length === 0 ? (
                             <p className="text-sm text-text-muted italic py-4 text-center">No hay proyectos registrados en esta categoría.</p>
                         ) : (
-                            (bdData[projectType] || []).map((project: any) => (
+                            (bdData[projectType] || []).map((project: any, index: number) => (
                                 <div 
                                     key={project.id}
-                                    className="p-4 bg-background-secondary rounded-xl border border-panel-border/30 flex items-start justify-between gap-4 hover:border-brand-primary/20 transition-all group"
+                                    draggable={true}
+                                    onDragStart={() => handleDragStart(index)}
+                                    onDragOver={handleDragOver}
+                                    onDrop={() => handleDrop(index)}
+                                    onDragEnd={handleDragEnd}
+                                    className={`p-4 bg-background-secondary rounded-xl border flex items-center justify-between gap-4 hover:border-brand-primary/20 transition-all group ${
+                                        draggedIndex === index 
+                                            ? 'opacity-40 border-dashed border-brand-primary/50' 
+                                            : 'border-panel-border/30'
+                                    }`}
                                 >
+                                    {/* Drag Handle */}
+                                    <div className="flex items-center text-text-muted/40 hover:text-text-muted cursor-grab shrink-0 self-stretch pr-1 group-active:cursor-grabbing">
+                                        <GripVertical className="w-4 h-4" />
+                                    </div>
+
                                     <div className="min-w-0 flex-1">
                                         <h3 className="font-display font-bold text-sm text-foreground mb-1 line-clamp-1">{project.titulo}</h3>
                                         <div className="flex flex-wrap gap-1 mb-2">
