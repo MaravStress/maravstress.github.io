@@ -135,6 +135,19 @@
       "descripcion": "Desarrollé Planeao como una respuesta directa a las limitaciones de las herramientas de gestión de tareas genéricas. Es una aplicación web construida desde cero, diseñada para reflejar mi flujo de trabajo como desarrollador y diseñador freelance.\n[Planeao](https://maravstress.github.io/planeao/#/)"
     },
     {
+      "id": "Programming-1785188211745",
+      "titulo": "Creador de contenido",
+      "etiquetas": [
+        "Saas",
+        "React",
+        "ts",
+        "frontend",
+        "IA integration"
+      ],
+      "imagen": "https://i.pinimg.com/1200x/db/92/9c/db929c760826ae3c220c1cdec6739e5d.jpg",
+      "descripcion": "Crea contenido para redes en segundos, no en horas. Usa plantillas inteligentes programadas para estructurar tus ideas, eliminar el bloqueo creativo y publicar publicaciones con ganchos efectivos que enganchan a tu audiencia. Mantiene tu marca activa y constante sin complicaciones."
+    },
+    {
       "id": "Programming-1783950858683",
       "titulo": "Script-Davinci",
       "etiquetas": [
