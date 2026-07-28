@@ -26,7 +26,7 @@ export default function Experience() {
 
                 {/* Timeline / Grid of Cards */}
                 <div className="flex flex-col gap-8">
-                    {profile.experience.map((exp, idx) => {
+                    {(profile.experience || []).map((exp: any, idx: number) => {
                         const isEven = idx % 2 === 0;
                         return (
                             <div 
@@ -66,7 +66,7 @@ export default function Experience() {
                                 </div>
 
                                 <ul className="list-none space-y-2.5">
-                                    {exp.bullets.map((bullet, bulletIdx) => (
+                                    {(exp.bullets || []).map((bullet: any, bulletIdx: number) => (
                                         <li key={bulletIdx} className="text-sm md:text-base text-text-muted font-light leading-relaxed flex items-start gap-3">
                                             <span className={`mt-1 text-sm select-none ${isEven ? 'text-brand-primary-light' : 'text-brand-secondary-light'}`}>
                                                 {isEven ? '✦' : '✨'}

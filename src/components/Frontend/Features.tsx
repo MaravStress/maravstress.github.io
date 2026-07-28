@@ -214,7 +214,7 @@ export default function Features() {
 
                             {/* Cards list */}
                             <div className="flex flex-col md:flex-row gap-6 md:gap-8">
-                                {projectsProg.map((project) => renderCard(project, false))}
+                                {projectsProg.map((project: any) => renderCard(project, false))}
                             </div>
                         </div>
                     )}
@@ -236,7 +236,7 @@ export default function Features() {
 
                             {/* Cards list */}
                             <div className="flex flex-col md:flex-row gap-6 md:gap-8">
-                                {projects3D.map((project) => renderCard(project, true))}
+                                {projects3D.map((project: any) => renderCard(project, true))}
                             </div>
                         </div>
                     )}

@@ -220,7 +220,7 @@ export default function Reviews() {
                             ref={row1Ref}
                             className="flex gap-8 px-12 md:px-24 w-max items-center"
                         >
-                            {reviews3D.map((review) => renderCard(review))}
+                            {reviews3D.map((review: any) => renderCard(review))}
                         </div>
                     </div>
                 )}
@@ -232,7 +232,7 @@ export default function Reviews() {
                             ref={row2Ref}
                             className="flex gap-8 px-12 md:px-24 w-max items-center"
                         >
-                            {reviewsProg.map((review) => renderCard(review))}
+                            {reviewsProg.map((review: any) => renderCard(review))}
                         </div>
                     </div>
                 )}

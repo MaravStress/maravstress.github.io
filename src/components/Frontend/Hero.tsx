@@ -113,7 +113,7 @@ export default function Hero() {
 
                 {/* Education Cards: spans all 12 columns, going side-by-side */}
                 <div className="lg:col-span-12 grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                    {profile.education.map((edu, idx) => (
+                    {(profile.education || []).map((edu: any, idx: number) => (
                         <div
                             key={edu.id}
                             className={`glass-panel p-6 hover:scale-[1.02] transition-all duration-300 group flex flex-col justify-between ${idx % 2 === 0

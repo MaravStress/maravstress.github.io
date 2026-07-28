@@ -44,7 +44,7 @@ export default function Skills() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {profile.skills.map((category, idx) => {
+                    {(profile.skills || []).map((category: any, idx: number) => {
                         const isEven = idx % 2 === 0;
                         const accentColorClass = isEven ? 'text-brand-primary' : 'text-brand-secondary';
                         
@@ -69,7 +69,7 @@ export default function Skills() {
 
                                 {/* Skills List */}
                                 <div className="flex flex-wrap gap-2">
-                                    {category.skills.map((skill, index) => (
+                                    {(category.skills || []).map((skill: any, index: number) => (
                                         <span 
                                             key={index} 
                                             className={`text-xs font-mono bg-background-secondary border border-panel-border px-3 py-1.5 rounded transition-all duration-200 text-text-muted ${

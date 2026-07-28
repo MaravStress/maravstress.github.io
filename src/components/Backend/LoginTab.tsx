@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { User, LogOut, ShieldCheck, AlertCircle, Copy, Check, Lock, ShieldAlert } from 'lucide-react';
+import { User, LogOut, ShieldCheck, AlertCircle, Copy, Check } from 'lucide-react';
 import { GoogleAuthProvider, signInWithPopup, signOut, type User as FirebaseUser } from 'firebase/auth';
 import { auth, ADMIN_EMAIL } from '../../firebase';
 
