@@ -1,7 +1,8 @@
 import WaitlistInput from './WaitlistInput';
-import content from '../../data/bd.json';
+import { usePortfolioData } from '../../context/DataContext';
 
 export default function WaitlistForm() {
+    const { data: content } = usePortfolioData();
     return (
         <section id="waitlist-section" className="w-full min-h-screen flex items-center justify-center relative px-6 py-24 bg-gradient-to-b from-background-secondary to-background overflow-hidden transition-colors duration-300">
 

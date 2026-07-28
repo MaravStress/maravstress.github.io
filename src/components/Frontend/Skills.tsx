@@ -1,5 +1,5 @@
 import { Code, Server, Database, Palette, Gamepad2, Box, Film, Languages } from 'lucide-react';
-import profile from '../../data/bd.json';
+import { usePortfolioData } from '../../context/DataContext';
 
 const getCategoryIcon = (category: string, colorClass: string) => {
     switch (category.toLowerCase()) {
@@ -25,6 +25,7 @@ const getCategoryIcon = (category: string, colorClass: string) => {
 };
 
 export default function Skills() {
+    const { data: profile } = usePortfolioData();
     return (
         <section id="skills-section" className="w-full min-h-screen py-24 px-6 bg-background relative overflow-hidden transition-colors duration-300">
             {/* Background dual glowing elements */}

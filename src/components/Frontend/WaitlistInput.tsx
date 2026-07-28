@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Loader2, Check, SquarePlus } from 'lucide-react';
-import content from '../../data/bd.json';
+import { usePortfolioData } from '../../context/DataContext';
 
 export default function WaitlistInput() {
+    const { data: content } = usePortfolioData();
     const [email, setEmail] = useState('');
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const [message, setMessage] = useState('');

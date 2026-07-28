@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ExternalLink, Code, Sparkles } from 'lucide-react';
-import bd from '../../data/bd.json';
+import { usePortfolioData } from '../../context/DataContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,6 +15,7 @@ interface ProjectData {
 }
 
 export default function Features() {
+    const { data: bd } = usePortfolioData();
     const projects3D = bd['3DAnimations'] || [];
     const projectsProg = bd.Programming || [];
     const containerRef = useRef<HTMLDivElement>(null);

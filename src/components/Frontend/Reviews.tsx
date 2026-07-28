@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Quote, Star } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import bd from '../../data/bd.json';
+import { usePortfolioData } from '../../context/DataContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,6 +15,7 @@ interface ReviewData {
 }
 
 export default function Reviews() {
+    const { data: bd } = usePortfolioData();
     const reviews3D = bd.reviews_3D || [];
     const reviewsProg = bd.reviews_Programming || [];
     const sectionRef = useRef<HTMLDivElement>(null);

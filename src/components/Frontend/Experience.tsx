@@ -1,7 +1,8 @@
 import { Briefcase, MapPin, Calendar, ChevronDown } from 'lucide-react';
-import profile from '../../data/bd.json';
+import { usePortfolioData } from '../../context/DataContext';
 
 export default function Experience() {
+    const { data: profile } = usePortfolioData();
     const handleScrollToProjects = () => {
         document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
     };

@@ -1,8 +1,9 @@
 import ThreeBackground from './ThreeBackground';
 import { ChevronDown, Mail, Linkedin, Github } from 'lucide-react';
-import profile from '../../data/bd.json';
+import { usePortfolioData } from '../../context/DataContext';
 
 export default function Hero() {
+    const { data: profile } = usePortfolioData();
     const upworkUrl = profile.links?.upwork || 'https://www.upwork.com/freelancers/~017c66dbe126786cbe';
     const githubUrl = profile.links?.github || 'https://github.com/MaravStress';
 

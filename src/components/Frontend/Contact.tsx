@@ -1,13 +1,13 @@
 import { Mail, Phone, MapPin, Linkedin, Settings, Github } from 'lucide-react';
-import bd from '../../data/bd.json';
-
-const profile = bd;
+import { usePortfolioData } from '../../context/DataContext';
 
 interface ContactProps {
     onEnterBackend: () => void;
 }
 
 export default function Contact({ onEnterBackend }: ContactProps) {
+    const { data: bd } = usePortfolioData();
+    const profile = bd;
     const upworkUrl = bd.links?.upwork || 'https://www.upwork.com/freelancers/~017c66dbe126786cbe';
     const githubUrl = bd.links?.github || 'https://github.com/MaravStress';
 

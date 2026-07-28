@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
     ArrowLeft, 
     Download, 
@@ -6,21 +6,43 @@ import {
     Layers, 
     Star, 
     Link, 
-    User
+    User,
+    LogIn,
+    FileCode,
+    Lock
 } from 'lucide-react';
-import bd from '../data/bd.json';
+import { onAuthStateChanged, type User as FirebaseUser } from 'firebase/auth';
+import { auth } from '../firebase';
+import { usePortfolioData } from '../context/DataContext';
 import CvEditor from '../components/Backend/CvEditor';
 import ProjectEditor from '../components/Backend/ProjectEditor';
 import ReviewEditor from '../components/Backend/ReviewEditor';
 import LinkEditor from '../components/Backend/LinkEditor';
+import LoginTab from '../components/Backend/LoginTab';
+import ArchivoTab from '../components/Backend/ArchivoTab';
 
 interface BackendProps {
     onBack: () => void;
 }
 
 export default function Backend({ onBack }: BackendProps) {
-    const [bdData, setBdData] = useState<any>(bd);
-    const [activeTab, setActiveTab] = useState<'cv' | 'projects' | 'reviews' | 'links'>('cv');
+    const { data: liveData } = usePortfolioData();
+    const [bdData, setBdData] = useState<any>(liveData);
+    const [user, setUser] = useState<FirebaseUser | null>(null);
+    const [activeTab, setActiveTab] = useState<'cv' | 'projects' | 'reviews' | 'links' | 'login' | 'archivo'>('cv');
+
+    useEffect(() => {
+        if (liveData) {
+            setBdData(liveData);
+        }
+    }, [liveData]);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+        });
+        return () => unsubscribe();
+    }, []);
 
     const handleUpdateCv = (json: any) => {
         setBdData((prev: any) => ({
@@ -158,6 +180,35 @@ export default function Backend({ onBack }: BackendProps) {
                         <Link className="w-4 h-4" />
                         Enlaces
                     </button>
+                    <button
+                        type="button"
+                        onClick={() => setActiveTab('login')}
+                        className={`px-5 py-3.5 text-sm font-display font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer flex items-center gap-2 shrink-0 ${
+                            activeTab === 'login'
+                                ? 'border-brand-primary text-brand-primary-light'
+                                : 'border-transparent text-text-muted hover:text-foreground'
+                        }`}
+                    >
+                        <LogIn className="w-4 h-4" />
+                        <span>Login</span>
+                        {user && <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>}
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => setActiveTab('archivo')}
+                        className={`px-5 py-3.5 text-sm font-display font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer flex items-center gap-2 shrink-0 ${
+                            activeTab === 'archivo'
+                                ? 'border-brand-primary text-brand-primary-light'
+                                : 'border-transparent text-text-muted hover:text-foreground'
+                        }`}
+                    >
+                        {user ? (
+                            <FileCode className="w-4 h-4 text-emerald-400" />
+                        ) : (
+                            <Lock className="w-4 h-4 text-amber-400" />
+                        )}
+                        <span>Archivo</span>
+                    </button>
                 </div>
 
                 {/* Tab Content */}
@@ -177,8 +228,22 @@ export default function Backend({ onBack }: BackendProps) {
                     {activeTab === 'links' && (
                         <LinkEditor links={bdData.links} onUpdateLink={handleUpdateLink} />
                     )}
+
+                    {activeTab === 'login' && (
+                        <LoginTab user={user} />
+                    )}
+
+                    {activeTab === 'archivo' && (
+                        <ArchivoTab 
+                            user={user} 
+                            bdData={bdData} 
+                            onUpdateData={setBdData} 
+                            onGoToLogin={() => setActiveTab('login')} 
+                        />
+                    )}
                 </div>
             </div>
         </section>
     );
 }
+
